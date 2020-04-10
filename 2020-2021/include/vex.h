@@ -12,10 +12,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <math.h>
+#include <cmath>
+
 #include "v5.h"
 #include "v5_vcs.h"
 
 #include "robot-config.h"
+#include "Odom/OdomSetup.h"
+#include "Odom/OdomPointTurn.h"
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \
