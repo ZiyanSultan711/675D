@@ -27,7 +27,7 @@ void OdomPointTurn(float Angle) //determine which type of point turn -- left or 
   }
 }
 
-void OdomPointTurnLookAt(float x2, float y2)
+void OdomPointTurnLookAt(float x2, float y2) // turn to look at a point on the field
 {
   float Angle = 0;
   float x1 = d1[0][0];
