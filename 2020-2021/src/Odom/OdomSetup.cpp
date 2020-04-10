@@ -1,6 +1,21 @@
 #include "vex.h"
 using namespace vex;
 
+/* 
+you need to define these variables before starting
+- wheel radius (wheelRad)
+- starting global orientation (thetaR)
+  - this is a x,y offset from a corner or something
+  - if set as 0, then local position equals global position
+- starting global position xy (dR)
+  - the angle which the robot starts at
+
+
+most important variables
+- absolute global position(d1)
+- absolute global orientation(theta1)
+*/
+
 float sL; //distance from center to left sensor wheel -- inches
 float sR; //distance from center to right sensor wheel -- inches
 float sS; //distance from center to back sensor wheel -- inches
