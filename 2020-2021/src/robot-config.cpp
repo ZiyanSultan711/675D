@@ -6,6 +6,7 @@ using namespace vex;
 //globals
 competition Competition;
 brain Brain;
+brain::sdcard SDcard;
 
 //motors
 motor frontLeft = motor(vex::PORT1, false);

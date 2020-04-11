@@ -9,6 +9,7 @@ you need to define these variables before starting
   - if set as 0, then local position equals global position
 - starting global position xy (dR)
   - the angle which the robot starts at
+- sL, sR, sS!!!!!!
 
 
 most important variables
@@ -16,6 +17,7 @@ most important variables
 - absolute global orientation(theta1)
 */
 
+//static variables
 float sL; //distance from center to left sensor wheel -- inches
 float sR; //distance from center to right sensor wheel -- inches
 float sS; //distance from center to back sensor wheel -- inches
