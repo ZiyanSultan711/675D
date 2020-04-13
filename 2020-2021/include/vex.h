@@ -24,10 +24,11 @@
 
 #include "robot-config.h"
 
-#include "Odom/OdomSetup.h"
-#include "Odom/OdomPointTurn.h"
-#include "Odom/OdomPathFinder.h"
-#include "Odom/OdomDriveStraight.h"
+#include "Odom/Setup.h"
+#include "Odom/PointTurn.h"
+#include "Odom/PathFinder.h"
+#include "Odom/DriveStraight.h"
+#include "Odom/Spline.h"
 
 #include "AutoRecorder/AutoRecorder.h"
 #include "AutoRecorder/RecordedAutos.h"

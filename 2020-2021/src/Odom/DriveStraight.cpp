@@ -9,6 +9,7 @@ void OdomDriveForwards(int x, int y)
   }
   //calculate distance between current postion and the xy input (distance formula)
   //use that positon for a pid loop
+  //error calculation
 }
 
 void OdomDriveBackwards(int x, int y)
