@@ -15,7 +15,7 @@ void OdomSimplePathFinder(int numPoints, int waypoints[numPoints][2]) //simple p
   }
 }
 
-void OdomCurvePath(int numPoints, int waypoints[numPoints][2]) //given a set of points, splines will be made to turn the points into a curve
+void OdomCurvePath(int numPoints, int waypoints[20][2]) //given a set of points, splines will be made to turn the points into a curve
 {
   std::vector<double> X_points; //vector list of x points
   std::vector<double> Y_points; //vector list of y poi nts
@@ -40,8 +40,8 @@ void OdomCurvePath(int numPoints, int waypoints[numPoints][2]) //given a set of 
       Y_points.push_back(waypoints[numPoints-1-i][1]);
     }
   }
-  calc::spline path; //create a path object
-  path.set_points(X_points, Y_points); //set the points, and create the path. input the x and y points into the natural spline calculator
+  calc::spline path; //create a spline object
+  path.set_points(X_points, Y_points, true); //set the points, and create the path. input the x and y points into the natural spline calculator
   /*
 
   now, the path is created as a function
@@ -50,7 +50,7 @@ void OdomCurvePath(int numPoints, int waypoints[numPoints][2]) //given a set of 
 
   example:
 
-  double point = path(1);  this is the interpolated value at 1.5
+  double point = path(1.5);  this is the interpolated value at 1.5
 
   */
 }
