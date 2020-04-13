@@ -26,6 +26,8 @@
 
 #include "Odom/OdomSetup.h"
 #include "Odom/OdomPointTurn.h"
+#include "Odom/OdomPathFinder.h"
+#include "Odom/OdomDriveStraight.h"
 
 #include "AutoRecorder/AutoRecorder.h"
 #include "AutoRecorder/RecordedAutos.h"
