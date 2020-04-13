@@ -27,7 +27,7 @@ void OdomCurvePath(int numPoints, int waypoints[numPoints][2]) //given a set of 
     swapped = true;
   }
 
-  for (int i = 0; i > numPoints; i++)
+  for (int i = 0; i < numPoints; i++)
   {
     if(!swapped) //if not swapped, then add x and y from input 2d array into vector list
     {
@@ -42,8 +42,15 @@ void OdomCurvePath(int numPoints, int waypoints[numPoints][2]) //given a set of 
   }
   calc::spline path; //create a path object
   path.set_points(X_points, Y_points); //set the points, and create the path. input the x and y points into the natural spline calculator
+  /*
 
-  //now, the path is created as a function
-  //the fuction can be called through path(x). this will return a double of the y position
-  //this function can be used to follow through the path
+  now, the path is created as a function
+  the fuction can be called through path(x). this will return a double of the y position
+  this function can be used to follow through the path
+
+  example:
+
+  double point = path(1);  this is the interpolated value at 1.5
+
+  */
 }
