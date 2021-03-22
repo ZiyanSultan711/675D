@@ -304,7 +304,7 @@ void autonomous(void)
 
   resetDriveSensors = true; //TESTING PID CODE
   desiredVal = 400;
-  resetDriveSensors = true;
+  resetDriveSensors = true; //TESTING GITHUB
   task::sleep(1000);
 
   /*
