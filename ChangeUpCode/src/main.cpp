@@ -302,7 +302,7 @@ void autonomous(void)
   task StartAuto(drivePID);
   enableDrivePID = true;
 
-  resetDriveSensors = true; //TESTING PID
+  resetDriveSensors = true; //TESTING PID CODE
   desiredVal = 400;
   resetDriveSensors = true;
   task::sleep(1000);
