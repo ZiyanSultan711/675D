@@ -105,7 +105,7 @@ int drivePID()
     LF.spin(vex::directionType::fwd, (lateralMotorPower - turnMotorPower), vex::velocityUnits::pct);
     RF.spin(vex::directionType::rev, (lateralMotorPower + turnMotorPower), vex::velocityUnits::pct);
 
-    // Code
+    //Code
     prevError = error;
     task::sleep(10);
   }
