@@ -7,7 +7,7 @@ motor top = vex::motor(vex::PORT12, false); //600 rpm
 motor bot = vex::motor(vex::PORT3, false); //600 rpm
 motor leftintake = vex::motor(vex::PORT14, true); //600 rpm
 motor rightintake = vex::motor(vex::PORT13, false); //600 rpm
-inertial Inert = vex::inertial(vex::PORT10);
+inertial Inert = vex::inertial(vex::PORT21);
 
 motor LB = vex::motor(vex::PORT17), LF = vex::motor(vex::PORT16);
 motor RB = vex::motor(vex::PORT20), RF = vex::motor(vex::PORT18);
@@ -15,24 +15,26 @@ motor RB = vex::motor(vex::PORT20), RF = vex::motor(vex::PORT18);
 void pre_auton(void) 
 {
   vexcodeInit();
+  inertial Inert = vex::inertial(vex::PORT21);
 }
 
 
 // PID CONTROLLER //
 
 // Settings
-double kP = 0.35;
+double kP = 0.45;
 double kI = 0.0;
 double kD = 0.15;
 
-double kPT = 0.1;
+double kPT = 0.5;
 double kIT = 0.0;
-double kDT = 0.0;
+double kDT = 0.2;
 
 // Auton Settings
-int desiredVal = 200;
+int desiredVal = 0;
 int turnRightDesiredVal = 0;
 int turnLeftDesiredVal = 0;
+int turnDesiredVal = 0;
 
 int error; // Sensor Value - Desired Value  : Positional Value
 int prevError = 0; // Position 10ms Ago
@@ -64,62 +66,86 @@ int drivePID()
       LB.setPosition(0, degrees);
     }
 
-    
     int LFPos = LF.position(degrees);
     int RFPos = RF.position(degrees);
     int LBPos = RF.position(degrees);
     int RBPos = RF.position(degrees);
+
+    if(desiredVal != 0 && turnDesiredVal == 0)
+    {
+      // Lateral Movement PID
+      int LeftMotorAverage = (LFPos + LBPos)/2;
+      int RightMotorAverage = (RFPos + RBPos)/2;
+      int averagePosition = (LeftMotorAverage + RightMotorAverage)/2;
+
+      // Potential
+      error = averagePosition - desiredVal;
+
+      // Derivative
+      derivative = error - prevError;
+
+      // Integral
+      totalError += error;
+
+      double lateralMotorPower = (error * kP) + (derivative * kD) + (totalError * kI);
+
+
+      LB.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
+      RB.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
+      LF.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
+      RF.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
+
+      // Code
+      prevError = error;
+      task::sleep(10);
+    }
     
-    // Lateral Movement PID
-    int LeftMotorAverage = (LFPos + LBPos)/2;
-    int RightMotorAverage = (RFPos + RBPos)/2;
-    int averagePosition = (LeftMotorAverage + RightMotorAverage)/2;
+    else if (desiredVal == 0 && turnDesiredVal != 0) 
+    {
+      // Turn Movement PID
+      int LeftMotorAverage = (LFPos + LBPos)/2;
+      int RightMotorAverage = (RFPos + RBPos)/2;
+      int turnDiff = (LeftMotorAverage + RightMotorAverage)/2;
 
-    // Potential
-    error = averagePosition - desiredVal;
+      // Potential
+      errorT = turnDiff - turnDesiredVal;
 
-    // Derivative
-    derivative = error - prevError;
+      // Derivative
+      derivativeT = errorT - prevErrorT;
 
-    // Integral
-    totalError += error;
+      // Integral
+      totalErrorT += errorT;
 
-    double lateralMotorPower = (error * kP) + (derivative * kD) + (totalError * kI);
+      double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
 
-    /*//Turning Movement PID
-    int LeftMotorAverageT = (LFPos + LBPos)/2;
-    int RightMotorAverageT = (RFPos + RBPos)/2;
-    int turnDiff = (LeftMotorAverageT - RightMotorAverageT);
+      float x = 0.85;
+      LB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+      RB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+      LF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+      RF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
 
-    // Potential
-    errorT = turnDiff - turnDesiredVal;
-
-    // Derivative
-    derivativeT = errorT - prevErrorT;
-
-    // Integral
-    totalErrorT += errorT;
-
-    double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
-    */
+      // Code
+      prevErrorT = errorT;
+      task::sleep(10);
+    }
     
-    LB.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-    RB.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
-    LF.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-    RF.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
-
-    // Code
-    prevError = error;
-    task::sleep(10);
+    else if(desiredVal == 0 && turnDesiredVal == 0)
+    {
+      LF.setBrake(brakeType::hold);
+      LB.setBrake(brakeType::hold);
+      RF.setBrake(brakeType::hold);
+      RB.setBrake(brakeType::hold);
+    }
+    
   }
 
   return 1;
 }
 
-/*
-int turnRightPID()
+
+int turnPID()
 {
-  while(enableTurnRightPID)
+  while(enableTurnPID)
   {
     if(resetDriveSensors)
     {
@@ -132,31 +158,15 @@ int turnRightPID()
     }
 
     
-    //int LFPos = LF.position(degrees);
+    int LFPos = LF.position(degrees);
     int RFPos = RF.position(degrees);
-    //int LBPos = RF.position(degrees);
+    int LBPos = RF.position(degrees);
     int RBPos = RF.position(degrees);
     
     // Lateral Movement PID
-    //int LeftMotorAverage = (LFPos + LBPos)/2;
+    int LeftMotorAverage = (LFPos + LBPos)/2;
     int RightMotorAverage = (RFPos + RBPos)/2;
-    int averagePosition = RightMotorAverage;
-
-    // Potential
-    error = turnRightDesiredVal-averagePosition;
-
-    // Derivative
-    derivative = error - prevError;
-
-    // Integral
-    totalError += error;
-
-    double lateralMotorPower = (error * kPT) + (derivative * kDT) + (totalError * kIT);
-
-    Turning Movement PID
-    int LeftMotorAverageT = (LFPos + LBPos)/2;
-    int RightMotorAverageT = (RFPos + RBPos)/2;
-    int turnDiff = (LeftMotorAverageT - RightMotorAverageT);
+    int turnDiff = (LeftMotorAverage + RightMotorAverage)/2;
 
     // Potential
     errorT = turnDiff - turnDesiredVal;
@@ -168,51 +178,41 @@ int turnRightPID()
     totalErrorT += errorT;
 
     double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
-    
-    //LB.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-    RB.spin(vex::directionType::rev, turnRightDesiredVal, vex::velocityUnits::pct);
-    //LF.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-    RF.spin(vex::directionType::rev, turnRightDesiredVal, vex::velocityUnits::pct);
+
+    float x = 0.6;
+    LB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+    RB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+    LF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+    RF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
 
     // Code
-    prevError = error;
-    task::sleep(10);
-  }
-
-  return 1;
-}
-*/
-
-int pointTurnFunction(double direction, double degrees,
-               double v) { // function to perform a decelerated point turn based
-                           // on the inertial sensor
-  double x = Inert.rotation(deg) + (direction * degrees);
-  double y = Inert.rotation(deg);
-  while (enableTurnPID) {
-    errorT = y - x;
-    derivativeT = errorT - prevErrorT;
-    totalErrorT += errorT;
-    v = (errorT * kPT + derivativeT * kDT + totalErrorT * kIT);
-
-    y = Inert.rotation(deg);
-    LB.spin(directionType::fwd, v, pct);
-    RB.spin(directionType::rev, v, pct);
-    LF.spin(directionType::fwd, v, pct);
-    RF.spin(directionType::rev, v, pct);
-    
     prevErrorT = errorT;
     task::sleep(10);
   }
-  LB.stop(brakeType::hold);
-  RB.stop(brakeType::hold);
-  LF.stop(brakeType::hold);
-  RF.stop(brakeType::hold);
+
   return 1;
 }
 
 
 ////////////////////
 
+void startIntake(int distance, int velocity)
+{
+  leftintake.startRotateFor(distance, rotationUnits::deg, velocity, velocityUnits::pct);
+  rightintake.startRotateFor(distance, rotationUnits::deg, velocity, velocityUnits::pct);
+}
+
+void shoot(int distance, int velocity)
+{
+  top.startRotateFor(distance, rotationUnits::deg, velocity, vex::velocityUnits::pct);
+}
+
+void feed(int distance, int velocity)
+{
+  leftintake.startRotateFor(distance, rotationUnits::deg, velocity, velocityUnits::pct);
+  rightintake.startRotateFor(distance, rotationUnits::deg, velocity, velocityUnits::pct);
+  bot.startRotateFor(distance, rotationUnits::deg, velocity, vex::velocityUnits::pct);
+}
 
 void oneballauto(double distance, double velocity)
 {
@@ -336,52 +336,55 @@ void autonomous(void)
   //LRTauto();
   
   task StartDrivePID(drivePID);
-  task StartTurnRightPID(turnRightPID);
   enableDrivePID = true;
-  enableTurnRightPID = false;
 
   resetDriveSensors = true;
-  desiredVal = 400;
+  desiredVal = -120;
+  task::sleep(1100);
+  desiredVal = 0;
+
   resetDriveSensors = true;
-  //turnRightDesiredVal = 100;
+  turnDesiredVal = -95;
+  task::sleep(800);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true;
+  desiredVal = 100;
+  startIntake(800, 75);
+  task::sleep(1100);
+
+  resetDriveSensors = true;
+  shoot(1000, 100);
+  task::sleep(500);
+  desiredVal = -75;
   task::sleep(1000);
+  desiredVal = 0;
 
-  /*
   resetDriveSensors = true;
-  desiredVal = -100;
-  turnDesiredVal = 100;
-  resetDriveSensors = true;
-  task::sleep(500);
-  desiredVal = 100;
-  resetDriveSensors = true;
-  desiredVal = -200;
-  turnDesiredVal = 200;
-  resetDriveSensors = true;
-  task::sleep(500);
+  turnDesiredVal = -98;
+  task::sleep(1000);
+  turnDesiredVal = 0;
 
-  desiredVal = -600;
-  turnDesiredVal = -200;
   resetDriveSensors = true;
-  task::sleep(500);
-  desiredVal = 200;
+  desiredVal = -520;
+  feed(1000, 75);
+  task::sleep(1200);
+  desiredVal = 0;
+
   resetDriveSensors = true;
-  task::sleep(500);
+  turnDesiredVal = 198;
+  task::sleep(1100);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true;
+  desiredVal = 75;
+  shoot(1000, 100);
+  task::sleep(1000);
+  
+  resetDriveSensors = true;
   desiredVal = -500;
-  resetDriveSensors = true;
-  task::sleep(500);
-  desiredVal = 500;
-  turnDesiredVal = -200;
-  resetDriveSensors = true;
-  task::sleep(500);
-
-  turnDesiredVal = 100;
-  desiredVal = 100;
-  resetDriveSensors = true;
-  task::sleep(500);
-  desiredVal = -200;
-  resetDriveSensors = true;
-  task::sleep(500);
-  */
+  task::sleep(2000);
+  //desiredVal = 0;
 }
 
 
