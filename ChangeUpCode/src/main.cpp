@@ -30,7 +30,8 @@ double kDT = 0.0;
 
 // Auton Settings
 int desiredVal = 200;
-int turnDesiredVal = 0;
+int turnRightDesiredVal = 0;
+int turnLeftDesiredVal = 0;
 
 int error; // Sensor Value - Desired Value  : Positional Value
 int prevError = 0; // Position 10ms Ago
@@ -44,7 +45,7 @@ int totalErrorT = 0; // totalError = totalError + error
 
 // Variables Modified for Use
 bool enableDrivePID = false;
-bool enableSCurve = false;
+bool enableTurnRightPID = false;
 bool resetDriveSensors = false;
 
 int drivePID()
@@ -83,7 +84,7 @@ int drivePID()
 
     double lateralMotorPower = (error * kP) + (derivative * kD) + (totalError * kI);
 
-    //Turning Movement PID
+    /*//Turning Movement PID
     int LeftMotorAverageT = (LFPos + LBPos)/2;
     int RightMotorAverageT = (RFPos + RBPos)/2;
     int turnDiff = (LeftMotorAverageT - RightMotorAverageT);
@@ -98,19 +99,25 @@ int drivePID()
     totalErrorT += errorT;
 
     double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
+    */
     
-    
-    LB.spin(vex::directionType::fwd, (lateralMotorPower - turnMotorPower), vex::velocityUnits::pct);
-    RB.spin(vex::directionType::rev, (lateralMotorPower + turnMotorPower), vex::velocityUnits::pct);
-    LF.spin(vex::directionType::fwd, (lateralMotorPower - turnMotorPower), vex::velocityUnits::pct);
-    RF.spin(vex::directionType::rev, (lateralMotorPower + turnMotorPower), vex::velocityUnits::pct);
+    LB.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
+    RB.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
+    LF.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
+    RF.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
 
-    //Code
+    // Code
     prevError = error;
     task::sleep(10);
   }
 
-  while(enableSCurve)
+  return 1;
+}
+
+
+int turnRightPID()
+{
+  while(enableTurnRightPID)
   {
     if(resetDriveSensors)
     {
@@ -123,18 +130,18 @@ int drivePID()
     }
 
     
-    int LFPos = LF.position(degrees);
+    //int LFPos = LF.position(degrees);
     int RFPos = RF.position(degrees);
-    int LBPos = RF.position(degrees);
+    //int LBPos = RF.position(degrees);
     int RBPos = RF.position(degrees);
     
     // Lateral Movement PID
-    int LeftMotorAverage = (LFPos + LBPos)/2;
+    //int LeftMotorAverage = (LFPos + LBPos)/2;
     int RightMotorAverage = (RFPos + RBPos)/2;
-    int averagePosition = (LeftMotorAverage + RightMotorAverage)/2;
+    int averagePosition = RightMotorAverage;
 
     // Potential
-    error = averagePosition - desiredVal;
+    error = averagePosition - turnRightDesiredVal;
 
     // Derivative
     derivative = error - prevError;
@@ -142,9 +149,9 @@ int drivePID()
     // Integral
     totalError += error;
 
-    double lateralMotorPower = (error * kP) + (derivative * kD) + (totalError * kI);
+    double lateralMotorPower = (error * kPT) + (derivative * kDT) + (totalError * kIT);
 
-    //Turning Movement PID
+    /*//Turning Movement PID
     int LeftMotorAverageT = (LFPos + LBPos)/2;
     int RightMotorAverageT = (RFPos + RBPos)/2;
     int turnDiff = (LeftMotorAverageT - RightMotorAverageT);
@@ -159,12 +166,12 @@ int drivePID()
     totalErrorT += errorT;
 
     double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
+    */
     
-    
-    LB.spin(vex::directionType::fwd, (lateralMotorPower - turnMotorPower)/2, vex::velocityUnits::pct);
-    RB.spin(vex::directionType::rev, (lateralMotorPower + turnMotorPower)/2, vex::velocityUnits::pct);
-    LF.spin(vex::directionType::fwd, (lateralMotorPower - turnMotorPower), vex::velocityUnits::pct);
-    RF.spin(vex::directionType::rev, (lateralMotorPower + turnMotorPower), vex::velocityUnits::pct);
+    //LB.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
+    RB.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
+    //LF.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
+    RF.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
 
     // Code
     prevError = error;
@@ -299,16 +306,19 @@ void autonomous(void)
   //oneballauto(300, 50);
   //LRTauto();
   
-  task StartAuto(drivePID);
+  task StartDrivePID(drivePID);
+  task StartTurnRightPID(turnRightPID);
   enableDrivePID = true;
+  enableTurnRightPID = true;
 
-  resetDriveSensors = true; //TESTING PID CODE
+  resetDriveSensors = true;
   desiredVal = 400;
-  resetDriveSensors = true; //TESTING GITHUB ur mom is a whore
+  resetDriveSensors = true;
+  turnRightDesiredVal = 100;
   task::sleep(1000);
 
   /*
-  resetDriveSensors = true; //AUTON PATH
+  resetDriveSensors = true;
   desiredVal = -100;
   turnDesiredVal = 100;
   resetDriveSensors = true;
