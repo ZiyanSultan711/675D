@@ -7,6 +7,7 @@ motor top = vex::motor(vex::PORT12, false); //600 rpm
 motor bot = vex::motor(vex::PORT3, false); //600 rpm
 motor leftintake = vex::motor(vex::PORT14, true); //600 rpm
 motor rightintake = vex::motor(vex::PORT13, false); //600 rpm
+inertial Inert = vex::inertial(vex::PORT10);
 
 motor LB = vex::motor(vex::PORT17), LF = vex::motor(vex::PORT16);
 motor RB = vex::motor(vex::PORT20), RF = vex::motor(vex::PORT18);
@@ -24,7 +25,7 @@ double kP = 0.35;
 double kI = 0.0;
 double kD = 0.15;
 
-double kPT = 0.0;
+double kPT = 0.1;
 double kIT = 0.0;
 double kDT = 0.0;
 
@@ -46,6 +47,7 @@ int totalErrorT = 0; // totalError = totalError + error
 // Variables Modified for Use
 bool enableDrivePID = false;
 bool enableTurnRightPID = false;
+bool enableTurnPID = false;
 bool resetDriveSensors = false;
 
 int drivePID()
@@ -114,7 +116,7 @@ int drivePID()
   return 1;
 }
 
-
+/*
 int turnRightPID()
 {
   while(enableTurnRightPID)
@@ -141,7 +143,7 @@ int turnRightPID()
     int averagePosition = RightMotorAverage;
 
     // Potential
-    error = averagePosition - turnRightDesiredVal;
+    error = turnRightDesiredVal-averagePosition;
 
     // Derivative
     derivative = error - prevError;
@@ -151,7 +153,7 @@ int turnRightPID()
 
     double lateralMotorPower = (error * kPT) + (derivative * kDT) + (totalError * kIT);
 
-    /*//Turning Movement PID
+    Turning Movement PID
     int LeftMotorAverageT = (LFPos + LBPos)/2;
     int RightMotorAverageT = (RFPos + RBPos)/2;
     int turnDiff = (LeftMotorAverageT - RightMotorAverageT);
@@ -166,18 +168,45 @@ int turnRightPID()
     totalErrorT += errorT;
 
     double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
-    */
     
     //LB.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-    RB.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
+    RB.spin(vex::directionType::rev, turnRightDesiredVal, vex::velocityUnits::pct);
     //LF.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-    RF.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
+    RF.spin(vex::directionType::rev, turnRightDesiredVal, vex::velocityUnits::pct);
 
     // Code
     prevError = error;
     task::sleep(10);
   }
 
+  return 1;
+}
+*/
+
+int pointTurnFunction(double direction, double degrees,
+               double v) { // function to perform a decelerated point turn based
+                           // on the inertial sensor
+  double x = Inert.rotation(deg) + (direction * degrees);
+  double y = Inert.rotation(deg);
+  while (enableTurnPID) {
+    errorT = y - x;
+    derivativeT = errorT - prevErrorT;
+    totalErrorT += errorT;
+    v = (errorT * kPT + derivativeT * kDT + totalErrorT * kIT);
+
+    y = Inert.rotation(deg);
+    LB.spin(directionType::fwd, v, pct);
+    RB.spin(directionType::rev, v, pct);
+    LF.spin(directionType::fwd, v, pct);
+    RF.spin(directionType::rev, v, pct);
+    
+    prevErrorT = errorT;
+    task::sleep(10);
+  }
+  LB.stop(brakeType::hold);
+  RB.stop(brakeType::hold);
+  LF.stop(brakeType::hold);
+  RF.stop(brakeType::hold);
   return 1;
 }
 
@@ -309,12 +338,12 @@ void autonomous(void)
   task StartDrivePID(drivePID);
   task StartTurnRightPID(turnRightPID);
   enableDrivePID = true;
-  enableTurnRightPID = true;
+  enableTurnRightPID = false;
 
   resetDriveSensors = true;
   desiredVal = 400;
   resetDriveSensors = true;
-  turnRightDesiredVal = 100;
+  //turnRightDesiredVal = 100;
   task::sleep(1000);
 
   /*
