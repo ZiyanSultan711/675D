@@ -359,6 +359,7 @@ void autonomous(void)
 void usercontrol(void) 
 {
   enableDrivePID = false;
+  enableTurnRightPID = false;
   while (1) 
   {
     LB.spin(vex::directionType::fwd, -Controller1.Axis3.value() - (Controller1.Axis1.value() * .65), vex::velocityUnits::pct);
