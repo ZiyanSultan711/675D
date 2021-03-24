@@ -31,7 +31,12 @@ extern bool enableTurnRightPID;
 extern bool enableTurnPID;
 extern bool resetDriveSensors;
 
+extern float driveSlow;
+extern float turnSlow;
+
 extern int drivePID();
 extern int turnPID();
+
+
 
 ////////////////////

@@ -34,6 +34,9 @@ bool enableTurnRightPID = false;
 bool enableTurnPID = false;
 bool resetDriveSensors = false;
 
+float driveSlow = 1.0;
+float turnSlow = 0.8;
+
 int drivePID()
 {
   while(enableDrivePID)
@@ -72,10 +75,10 @@ int drivePID()
       double lateralMotorPower = (error * kP) + (derivative * kD) + (totalError * kI);
 
 
-      LB.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-      RB.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
-      LF.spin(vex::directionType::fwd, (lateralMotorPower), vex::velocityUnits::pct);
-      RF.spin(vex::directionType::rev, (lateralMotorPower), vex::velocityUnits::pct);
+      LB.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      RB.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      LF.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      RF.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
 
       // Code
       prevError = error;
@@ -100,11 +103,10 @@ int drivePID()
 
       double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
 
-      float x = 0.85;
-      LB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
-      RB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
-      LF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
-      RF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+      LB.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      RB.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      LF.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      RF.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
 
       // Code
       prevErrorT = errorT;
