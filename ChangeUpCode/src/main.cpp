@@ -338,53 +338,126 @@ void autonomous(void)
   task StartDrivePID(drivePID);
   enableDrivePID = true;
 
-  resetDriveSensors = true;
+  //STARTING FROM TOP OF THE FIELD AUTONOMOUS CODE WITH SELF CORRECTING PID LOOP
+  resetDriveSensors = true; // GOES BACKWARD 120 ROTATIONS
   desiredVal = -120;
   task::sleep(1100);
   desiredVal = 0;
 
-  resetDriveSensors = true;
+  resetDriveSensors = true; // TURNS ABOUT 45 DEGREES
   turnDesiredVal = -95;
   task::sleep(800);
   turnDesiredVal = 0;
 
-  resetDriveSensors = true;
+  resetDriveSensors = true; // GOES FORWARD AND INTAKES THE BALL
   desiredVal = 100;
   startIntake(800, 75);
   task::sleep(1100);
 
-  resetDriveSensors = true;
+  resetDriveSensors = true; // SCORES A BALL AND DRIVES BACKWARD
   shoot(1000, 100);
   task::sleep(500);
   desiredVal = -75;
   task::sleep(1000);
   desiredVal = 0;
 
-  resetDriveSensors = true;
+  resetDriveSensors = true; // TURNS TO FACE WALL
   turnDesiredVal = -98;
   task::sleep(1000);
   turnDesiredVal = 0;
 
-  resetDriveSensors = true;
+  resetDriveSensors = true; // GOES BACKWARD TO THE MIDDLE GOAL POST AND FEEDS THE BALL TO THE TOP
   desiredVal = -520;
   feed(1000, 75);
   task::sleep(1200);
   desiredVal = 0;
 
-  resetDriveSensors = true;
+  resetDriveSensors = true; // PERFECT 90 DEGREE TURN
   turnDesiredVal = 198;
   task::sleep(1100);
   turnDesiredVal = 0;
 
-  resetDriveSensors = true;
+  resetDriveSensors = true; // GOES FORWARD AND SCORES THE BALL
   desiredVal = 75;
   shoot(1000, 100);
   task::sleep(1000);
   
-  resetDriveSensors = true;
+  resetDriveSensors = true; // GOES STRAIGHT BACKWARD TO SCORE THE CENTER POST BALL
   desiredVal = -500;
+  task::sleep(1200);
+  desiredVal = 0;
+
+  resetDriveSensors = true; // TURNS TO FACE THE CORNER POST *untuned*
+  turnDesiredVal = 98;
+  task::sleep(1000);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true; // DRIVES FORWARD TO THE CENTER POST, INTAKES THE BALL, AND SCORES IT *untuned*
+  desiredVal = 800;
+  startIntake(1000, 300);
+  shoot(600, 75);
   task::sleep(2000);
-  //desiredVal = 0;
+
+  /*//STARTING FROM BOTTOM OF THE FIELD AUTONOMOUS CODE WITH SELF CORRECTING PID LOOP
+  resetDriveSensors = true; // GOES BACKWARD 120 ROTATIONS
+  desiredVal = -120;
+  task::sleep(1100);
+  desiredVal = 0;
+
+  resetDriveSensors = true; // TURNS ABOUT 45 DEGREES
+  turnDesiredVal = 95;
+  task::sleep(800);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true; // GOES FORWARD AND INTAKES THE BALL
+  desiredVal = 100;
+  startIntake(800, 75);
+  task::sleep(1100);
+
+  resetDriveSensors = true; // SCORES A BALL AND DRIVES BACKWARD
+  shoot(1000, 100);
+  task::sleep(500);
+  desiredVal = -75;
+  task::sleep(1000);
+  desiredVal = 0;
+
+  resetDriveSensors = true; // TURNS TO FACE WALL
+  turnDesiredVal = 98;
+  task::sleep(1000);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true; // GOES BACKWARD TO THE MIDDLE GOAL POST AND FEEDS THE BALL TO THE TOP
+  desiredVal = -520;
+  feed(1000, 75);
+  task::sleep(1200);
+  desiredVal = 0;
+
+  resetDriveSensors = true; // PERFECT 90 DEGREE TURN
+  turnDesiredVal = -198;
+  task::sleep(1100);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true; // GOES FORWARD AND SCORES THE BALL
+  desiredVal = 75;
+  shoot(1000, 100);
+  task::sleep(1000);
+  
+  resetDriveSensors = true; // GOES STRAIGHT BACKWARD TO SCORE THE CENTER POST BALL
+  desiredVal = -500;
+  task::sleep(1200);
+  desiredVal = 0;
+
+  resetDriveSensors = true; // TURNS TO FACE THE CORNER POST *untuned*
+  turnDesiredVal = -98;
+  task::sleep(1000);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true; // DRIVES FORWARD TO THE CENTER POST, INTAKES THE BALL, AND SCORES IT *untuned*
+  desiredVal = 800;
+  startIntake(1000, 300);
+  shoot(600, 75);
+  task::sleep(2000);
+  */
 }
 
 
