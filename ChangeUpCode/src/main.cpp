@@ -193,7 +193,6 @@ int turnPID()
   return 1;
 }
 
-
 ////////////////////
 
 void startIntake(int distance, int velocity)
@@ -330,11 +329,8 @@ void LRTauto(void)
 
 }
 
-void autonomous(void) 
+void topAuton(void)
 {
-  //oneballauto(300, 50);
-  //LRTauto();
-  
   task StartDrivePID(drivePID);
   enableDrivePID = true;
 
@@ -397,8 +393,14 @@ void autonomous(void)
   startIntake(1000, 300);
   shoot(600, 75);
   task::sleep(2000);
+}
 
-  /*//STARTING FROM BOTTOM OF THE FIELD AUTONOMOUS CODE WITH SELF CORRECTING PID LOOP
+void botAuton(void)
+{
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+
+  //STARTING FROM BOTTOM OF THE FIELD AUTONOMOUS CODE WITH SELF CORRECTING PID LOOP
   resetDriveSensors = true; // GOES BACKWARD 120 ROTATIONS
   desiredVal = -120;
   task::sleep(1100);
@@ -457,7 +459,17 @@ void autonomous(void)
   startIntake(1000, 300);
   shoot(600, 75);
   task::sleep(2000);
-  */
+}
+
+void skillAuton(void)
+{
+}
+
+void autonomous(void) 
+{
+  //topAuton();
+  //botAuton();
+  //skillAuton();
 }
 
 
