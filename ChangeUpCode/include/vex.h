@@ -17,6 +17,10 @@
 
 #include "robot-config.h"
 
+#include "PID/PIDsetup.h"
+#include "auton/auton.h"
+#include "auton/helperfunctions.h"
+
 #define waitUntil(condition)                                                   \
   do {                                                                         \
     wait(5, msec);                                                             \

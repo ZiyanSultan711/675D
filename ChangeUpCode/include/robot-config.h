@@ -2,9 +2,18 @@ using namespace vex;
 
 extern brain Brain;
 
-/**
- * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
- *
- * This should be called at the start of your int main function.
- */
+
+extern competition Competition;
+extern controller Controller1;
+extern motor top;
+extern motor bot;
+extern motor leftintake;
+extern motor rightintake;
+extern inertial Inert;
+
+extern motor LB;
+extern motor LF;
+extern motor RB;
+extern motor RF;
+
 void vexcodeInit(void);
