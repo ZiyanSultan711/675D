@@ -9,7 +9,17 @@ void pre_auton(void)
 
 void autonomous(void) 
 {
-  //topAuton();
+/*
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+  resetDriveSensors = true;
+  desiredVal = 0;
+  turnDesiredVal = 98;
+  //task::sleep(1000);
+  resetDriveSensors = true;
+*/
+
+  topAuton();
   //botAuton();
   //skillAuton();
 }

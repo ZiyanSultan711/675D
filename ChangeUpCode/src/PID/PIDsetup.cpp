@@ -10,7 +10,7 @@ double kD = 0.15;
 
 double kPT = 0.5;
 double kIT = 0.0;
-double kDT = 0.25;
+double kDT = 0.35;
 
 // Auton Settings
 int desiredVal = 0;

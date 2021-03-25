@@ -26,3 +26,9 @@ void fullfeed(int distance, int velocity)
   bot.startRotateFor(distance, rotationUnits::deg, velocity, vex::velocityUnits::pct);
   top.startRotateFor(distance, rotationUnits::deg, velocity, vex::velocityUnits::pct);
 }
+
+void fastShoot(int distance, int velocity)
+{
+  bot.startRotateFor(distance, rotationUnits::deg, velocity, vex::velocityUnits::pct);
+  top.startRotateFor(distance, rotationUnits::deg, velocity, vex::velocityUnits::pct);
+}
