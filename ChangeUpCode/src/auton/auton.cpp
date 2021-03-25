@@ -34,7 +34,7 @@ void topAuton(void)
   resetDriveSensors = true; // TURNS TO FACE WALL
   turnSlow = 0.75;
   turnDesiredVal = -93;
-  task::sleep(1000);
+  task::sleep(900);
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // GOES BACKWARD TO THE MIDDLE GOAL POST AND FEEDS THE BALL TO THE TOP
@@ -46,14 +46,14 @@ void topAuton(void)
   resetDriveSensors = true; // PERFECT 90 DEGREE TURN
   turnSlow = 0.7;
   turnDesiredVal = 198;
-  task::sleep(1100);
+  task::sleep(1000);
   turnDesiredVal = 0;
   turnSlow = 0.85;
 
   resetDriveSensors = true; // GOES FORWARD AND SCORES THE BALL
   desiredVal = 100;
-  shoot(1000, 100);
-  task::sleep(1200);
+  shoot(800, 100);
+  task::sleep(1000);
 
   resetDriveSensors = true; // GOES BACKWARD
   driveSlow = 0.7;
@@ -75,9 +75,9 @@ void topAuton(void)
   task::sleep(1200);
   desiredVal = 0;
 
-  resetDriveSensors = true; // TURNS ABOUT 45 DEGREES
+  resetDriveSensors = true; // TURNS YO FACE GOAL
   turnSlow = 0.7;
-  turnDesiredVal = -80;
+  turnDesiredVal = -75;
   task::sleep(800);
   turnDesiredVal = 0;
   turnSlow = 0.85;
@@ -193,14 +193,14 @@ void skillAuton(void)
   task StartDrivePID(drivePID);
   enableDrivePID = true;
 
-  driveSlow = 0.8;
+  driveSlow = 0.75;
   turnSlow = 0.7;
 
   //////////////////// A ////////////////////
   resetDriveSensors = true; // starts top left, goes fwd
-  desiredVal = 175;
-  startIntake(400, 60);
-  task::sleep(1000);
+  desiredVal = 200;
+  startIntake(200, 60);
+  task::sleep(1400);
   desiredVal = 0;
 
   resetDriveSensors = true; //135 degree turn left
@@ -210,60 +210,59 @@ void skillAuton(void)
   
   resetDriveSensors = true; // go fwd to goal
   desiredVal = 120;
-  task::sleep(1000);
+  task::sleep(1100);
   desiredVal = 0;
   
   resetDriveSensors = true; //turn of pid, shoot
   enableDrivePID = false;
-  shoot(500, 100);
-  task::sleep(400);
+  fastShoot(1000, 100);
+  task::sleep(900);
   enableDrivePID = true;
 
   resetDriveSensors = true; //back away from goal
-  desiredVal = -80;
+  desiredVal = -60;
   task::sleep(1000);
   desiredVal = 0;
 
   ////////////////////// D //////////////////
   resetDriveSensors = true; //45 degree turn right
-  turnDesiredVal = -95;
+  turnDesiredVal = -93;
   task::sleep(1000);
   turnDesiredVal = 0;
 
   resetDriveSensors = true; //back up to next goal
-  desiredVal = -500;
+  desiredVal = -520;
   feed(1000, 70);
-  task::sleep(2000);
+  task::sleep(1500);
   desiredVal = 0;
 
   resetDriveSensors = true; // 90 degree turn left
   turnDesiredVal = 198;
-  task::sleep(1100);
+  task::sleep(1000);
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // GOES FORWARD AND SCORES THE BALL
-  desiredVal = 75;
-  shoot(1000, 100);
+  desiredVal = 100;
+  shoot(800, 100);
   task::sleep(1000);
-  desiredVal = 0;
   
   resetDriveSensors = true; // comes back
-  desiredVal = -75;
+  desiredVal = -110;
   task::sleep(1000);
   desiredVal = 0;
 
   resetDriveSensors = true; // 90 degree turn left
-  turnDesiredVal = 198;
+  turnDesiredVal = 200;
   task::sleep(1100);
   turnDesiredVal = 0;
 
   //////////////////// G ////////////////////
   resetDriveSensors = true; //drive up to next goal and intake ball
-  driveSlow = 0.6;
-  desiredVal = 500;
-  feed(1000, 50);
+  driveSlow = 0.5;
+  desiredVal = 540;
+  feed(1000, 45);
   task::sleep(2500);
-  driveSlow = 1.0;
+  driveSlow = 0.75;
   desiredVal = 0;
 
   resetDriveSensors = true; //45 degree turn right
@@ -272,18 +271,18 @@ void skillAuton(void)
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // go fwd to goal
-  desiredVal = 120;
+  desiredVal = 80;
   task::sleep(1000);
   desiredVal = 0;
 
   resetDriveSensors = true; //turn of pid, shoot
   enableDrivePID = false;
-  shoot(500, 100);
-  task::sleep(400);
+  shoot(1000, 100);
+  task::sleep(750);
   enableDrivePID = true;
 
   resetDriveSensors = true; //back away from goal
-  desiredVal = -80;
+  desiredVal = -100;
   task::sleep(1000);
   desiredVal = 0;
 
@@ -294,14 +293,14 @@ void skillAuton(void)
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // go back and allign with wall
-  driveSlow = 0.7;
-  desiredVal = -100;
+  enableDrivePID = false;
+  NONPIDdrive(-300, 50);
   task::sleep(1400);
-  driveSlow = 1.0;
+  enableDrivePID = true;
   desiredVal = 0;
 
   resetDriveSensors = true; //drive fwd away from wall
-  desiredVal = 80;
+  desiredVal = 120;
   task::sleep(1000);
   desiredVal = 0;
 
@@ -311,11 +310,12 @@ void skillAuton(void)
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // go forward and intake ball
-  driveSlow = 0.8;
+  driveSlow = 0.6;
   desiredVal = 500;
+  task::sleep(1000);
   feed(2000, 60);
-  task::sleep(2000);
-  driveSlow = 1.0;
+  task::sleep(1000);
+  driveSlow = 0.7;
   desiredVal = 0;
 
   resetDriveSensors = true; // 90 degree turn right
@@ -334,30 +334,21 @@ void skillAuton(void)
   task::sleep(400);
   enableDrivePID = true;
 
-  resetDriveSensors = true; // go bwd and push ball into middle goal
-  driveSlow = 0.7;
-  desiredVal = -400;
+  resetDriveSensors = true; // back away from the goal
+  desiredVal = -120;
   task::sleep(1600);
-  driveSlow = 1.0;
-  desiredVal = 0;
-
-  resetDriveSensors = true; // go fwd
-  desiredVal = 100;
-  task::sleep(800);
   desiredVal = 0;
 
   ////////////////// I //////////////
-  resetDriveSensors = true; // 90 degree turn left
-  turnDesiredVal = 198;
-  task::sleep(1100);
+  resetDriveSensors = true; // turn left to face ball
+  turnDesiredVal = 225;
+  task::sleep(1400);
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // go fwd and intake ball
-  driveSlow = 0.7;
   desiredVal = 300;
   feed(2000, 60);
   task::sleep(1600);
-  driveSlow = 1.0;
   desiredVal = 0;
 
   resetDriveSensors = true; //  turn right to face goal
