@@ -30,10 +30,10 @@ void usercontrol(void)
   enableTurnRightPID = false;
   while (1) 
   {
-    LB.spin(vex::directionType::fwd, -Controller1.Axis3.value() - (Controller1.Axis1.value() * .65), vex::velocityUnits::pct);
-    RB.spin(vex::directionType::rev, -Controller1.Axis3.value() + (Controller1.Axis1.value() * .65), vex::velocityUnits::pct);
-    LF.spin(vex::directionType::fwd, -Controller1.Axis3.value() - (Controller1.Axis1.value() * .65), vex::velocityUnits::pct);
-    RF.spin(vex::directionType::rev, -Controller1.Axis3.value() + (Controller1.Axis1.value() * .65), vex::velocityUnits::pct); //drive code (turning is slowed to .7 cuz i suck but ishaan is good)
+    LB.spin(vex::directionType::fwd, -Controller1.Axis3.value() - (Controller1.Axis1.value() * .5), vex::velocityUnits::pct);
+    RB.spin(vex::directionType::rev, -Controller1.Axis3.value() + (Controller1.Axis1.value() * .5), vex::velocityUnits::pct);
+    LF.spin(vex::directionType::fwd, -Controller1.Axis3.value() - (Controller1.Axis1.value() * .5), vex::velocityUnits::pct);
+    RF.spin(vex::directionType::rev, -Controller1.Axis3.value() + (Controller1.Axis1.value() * .5), vex::velocityUnits::pct); //drive code (turning is slowed to .7 cuz i suck but ishaan is good)
     
   if (Controller1.ButtonL1.pressing())
   {
