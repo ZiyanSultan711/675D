@@ -15,7 +15,6 @@ void autonomous(void)
   resetDriveSensors = true;
   desiredVal = 0;
   turnDesiredVal = 98;
-  //task::sleep(1000);
   resetDriveSensors = true;
 */
 

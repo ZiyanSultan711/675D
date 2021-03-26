@@ -8,6 +8,8 @@ void topAuton(void)
   task StartDrivePID(drivePID);
   enableDrivePID = true;
 
+  turnSlow = 0.7;
+
   //STARTING FROM TOP OF THE FIELD AUTONOMOUS CODE WITH SELF CORRECTING PID LOOP
   resetDriveSensors = true; // GOES BACKWARD 120 ROTATIONS
   desiredVal = -120;
@@ -27,21 +29,23 @@ void topAuton(void)
   resetDriveSensors = true; // SCORES A BALL AND DRIVES BACKWARD
   fastShoot(1000, 100);
   task::sleep(1000);
-  desiredVal = -60;
+  desiredVal = -70;
   task::sleep(800);
   desiredVal = 0;
 
   resetDriveSensors = true; // TURNS TO FACE WALL
   turnSlow = 0.75;
-  turnDesiredVal = -93;
-  task::sleep(900);
+  turnDesiredVal = -95;
+  task::sleep(1100);
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // GOES BACKWARD TO THE MIDDLE GOAL POST AND FEEDS THE BALL TO THE TOP
+  driveSlow = 0.9;
   desiredVal = -515;
   feed(1000, 75);
-  task::sleep(1200);
+  task::sleep(1300);
   desiredVal = 0;
+  driveSlow = 1;
 
   resetDriveSensors = true; // PERFECT 90 DEGREE TURN
   turnSlow = 0.7;

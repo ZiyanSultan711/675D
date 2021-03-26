@@ -8,7 +8,7 @@ double kP = 0.45;
 double kI = 0.0;
 double kD = 0.15;
 
-double kPT = 0.5;
+double kPT = 0.4;
 double kIT = 0.0;
 double kDT = 0.35;
 
