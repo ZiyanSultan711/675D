@@ -8,8 +8,6 @@ void topAuton(void)
   task StartDrivePID(drivePID);
   enableDrivePID = true;
 
-  turnSlow = 0.7;
-
   //STARTING FROM TOP OF THE FIELD AUTONOMOUS CODE WITH SELF CORRECTING PID LOOP
   resetDriveSensors = true; // GOES BACKWARD 120 ROTATIONS
   desiredVal = -120;
@@ -17,79 +15,83 @@ void topAuton(void)
   desiredVal = 0;
 
   resetDriveSensors = true; // TURNS ABOUT 45 DEGREES
-  turnDesiredVal = -95;
-  task::sleep(700);
+  turnDesiredVal = -98;
+  task::sleep(800);
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // GOES FORWARD AND INTAKES THE BALL
-  desiredVal = 95;
-  startIntake(400, 68);
-  task::sleep(800);
+  desiredVal = 105;
+  task::sleep(300);
+  startIntake(600, 66);
+  task::sleep(750);
 
   resetDriveSensors = true; // SCORES A BALL AND DRIVES BACKWARD
-  fastShoot(1000, 100);
-  task::sleep(1000);
-  desiredVal = -70;
+  shoot(800, 50);
+  task::sleep(800);
+  driveSlow = 0.7;
+  desiredVal = -125;
   task::sleep(800);
   desiredVal = 0;
+  driveSlow = 1.0;
 
   resetDriveSensors = true; // TURNS TO FACE WALL
   turnSlow = 0.75;
   turnDesiredVal = -95;
-  task::sleep(1100);
+  task::sleep(850);
   turnDesiredVal = 0;
 
   resetDriveSensors = true; // GOES BACKWARD TO THE MIDDLE GOAL POST AND FEEDS THE BALL TO THE TOP
-  driveSlow = 0.9;
-  desiredVal = -515;
-  feed(1000, 75);
-  task::sleep(1300);
+  desiredVal = -535;
+  feed(1100, 75);
+  task::sleep(1200);
   desiredVal = 0;
-  driveSlow = 1;
 
   resetDriveSensors = true; // PERFECT 90 DEGREE TURN
   turnSlow = 0.7;
   turnDesiredVal = 198;
-  task::sleep(1000);
+  task::sleep(900);
   turnDesiredVal = 0;
   turnSlow = 0.85;
 
   resetDriveSensors = true; // GOES FORWARD AND SCORES THE BALL
-  desiredVal = 100;
-  shoot(800, 100);
-  task::sleep(1000);
+  desiredVal = 140;
+  task::sleep(400);
+  shoot(1000, 100);
+  task::sleep(750);
 
   resetDriveSensors = true; // GOES BACKWARD
   driveSlow = 0.7;
-  desiredVal = -110;
-  task::sleep(1000);
+  desiredVal = -115;
+  task::sleep(980);
   driveSlow = 1.0;
   desiredVal = 0;
   
   resetDriveSensors = true; // PERFECT 90 DEGREE TURN
   turnSlow = 0.7;
-  turnDesiredVal = 200;
+  turnDesiredVal = 207;
   task::sleep(1000);
   turnDesiredVal = 0;
   turnSlow = 0.85;
 
   resetDriveSensors = true; // GOES FORWARD TO THE END GOAL POST AND SCORES THE BALL TO THE TOP
-  desiredVal = 540;
+  driveSlow = 0.8;
+  desiredVal = 535;
   feed(1000, 75);
-  task::sleep(1200);
+  task::sleep(1100);
   desiredVal = 0;
+  driveSlow = 1.0;
 
-  resetDriveSensors = true; // TURNS YO FACE GOAL
-  turnSlow = 0.7;
-  turnDesiredVal = -75;
-  task::sleep(800);
+  resetDriveSensors = true; // TURNS ABOUT 45 DEGREES
+  turnSlow = 0.65;
+  turnDesiredVal = -66;
+  task::sleep(750);
   turnDesiredVal = 0;
   turnSlow = 0.85;
 
   resetDriveSensors = true; // GOES FORWARD AND INTAKES THE BALL
-  desiredVal = 125;
-  startIntake(1000, 90);
-  task::sleep(1200);
+  desiredVal = 175;
+  startIntake(1350, 90);
+  task::sleep(1150);
 
   resetDriveSensors = true; // SCORES A BALL AND DRIVES BACKWARD
   fastShoot(2000, 100);

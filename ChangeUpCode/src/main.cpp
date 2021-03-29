@@ -5,6 +5,11 @@ void pre_auton(void)
 {
   vexcodeInit();
   Inert = vex::inertial(vex::PORT21);
+  Inert.calibrate();
+  // waits for the Inertial Sensor to calibrate
+  while (Inert.isCalibrating()) {
+    wait(100, msec);
+  }
 }
 
 void autonomous(void) 

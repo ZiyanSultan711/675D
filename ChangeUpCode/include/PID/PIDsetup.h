@@ -37,6 +37,7 @@ extern float turnSlow;
 extern int drivePID();
 extern int turnPID();
 
+extern int inertVal;
 
 
 ////////////////////
