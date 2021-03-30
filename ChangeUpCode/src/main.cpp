@@ -14,18 +14,15 @@ void pre_auton(void)
 
 void autonomous(void) 
 {
-/*
-  task StartDrivePID(drivePID);
-  enableDrivePID = true;
-  resetDriveSensors = true;
-  desiredVal = 0;
-  turnDesiredVal = 98;
-  resetDriveSensors = true;
-*/
+  
+  headingTurn();
 
-  topAuton();
+  //topAuton();
+
   //botAuton();
+
   //skillAuton();
+
 }
 
 void usercontrol(void) 

@@ -2,6 +2,22 @@
 using namespace vex;
 
 
+void headingTurn(void)
+{
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+
+  resetDriveSensors = true;
+  inertValReset = true;
+  desiredVal = 200;
+  task::sleep(1000);
+  desiredVal = 0;
+
+  resetDriveSensors = true;
+  inertValReset = true;
+  turnDesiredVal = 90;
+  task::sleep(1000);
+}
 
 void topAuton(void)
 {
@@ -357,6 +373,16 @@ void skillAuton(void)
   desiredVal = -100;
   task::sleep(1600);
 
+}
+
+void testAuto(void)
+{
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+  resetDriveSensors = true;
+  desiredVal = 0;
+  turnDesiredVal = 98;
+  resetDriveSensors = true;
 }
 
 ///////////////////////////////

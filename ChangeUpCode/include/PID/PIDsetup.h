@@ -30,6 +30,7 @@ extern bool enableDrivePID;
 extern bool enableTurnRightPID;
 extern bool enableTurnPID;
 extern bool resetDriveSensors;
+extern bool inertValReset;
 
 extern float driveSlow;
 extern float turnSlow;

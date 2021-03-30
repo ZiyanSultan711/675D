@@ -33,6 +33,7 @@ bool enableDrivePID = false;
 bool enableTurnRightPID = false;
 bool enableTurnPID = false;
 bool resetDriveSensors = false;
+bool inertValReset = false;
 
 float driveSlow = 1.0;
 float turnSlow = 0.8;
@@ -51,6 +52,13 @@ int drivePID()
       RF.setPosition(0, degrees);
       RB.setPosition(0, degrees);
       LB.setPosition(0, degrees);
+    }
+
+    if(inertValReset)
+    {
+      inertValReset = false;
+
+      Inert.resetRotation();
     }
 
     int LFPos = LF.position(degrees);
