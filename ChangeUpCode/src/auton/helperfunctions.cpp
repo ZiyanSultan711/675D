@@ -40,3 +40,8 @@ void NONPIDdrive(int distance, int velocity)
   RF.startRotateFor(-distance, rotationUnits::deg, velocity, velocityUnits::pct);
   RB.startRotateFor(-distance, rotationUnits::deg, velocity, velocityUnits::pct);
 }
+
+void headingVal(double degrees)
+{
+  Inert.setHeading(degrees, rotationUnits::deg);
+}
