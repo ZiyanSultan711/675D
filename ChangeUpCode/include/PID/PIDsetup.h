@@ -40,5 +40,7 @@ extern int turnPID();
 
 extern int inertVal;
 
+extern int pointTurn2(double direction, double degrees, double v);
+
 
 ////////////////////

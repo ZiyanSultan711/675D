@@ -7,16 +7,20 @@ void headingTurn(void)
   task StartDrivePID(drivePID);
   enableDrivePID = true;
 
+  Inert.calibrate(2000);
+
   resetDriveSensors = true;
-  inertValReset = true;
+  //inertValReset = true;
   desiredVal = 200;
   task::sleep(1000);
   desiredVal = 0;
 
   resetDriveSensors = true;
-  inertValReset = true;
+  //inertValReset = true;
   turnDesiredVal = 90;
   task::sleep(1000);
+  //inertValReset = true;
+  //task::sleep(1000);
 }
 
 void topAuton(void)
@@ -377,12 +381,14 @@ void skillAuton(void)
 
 void testAuto(void)
 {
-  task StartDrivePID(drivePID);
+  /*task StartDrivePID(drivePID);
   enableDrivePID = true;
   resetDriveSensors = true;
   desiredVal = 0;
-  turnDesiredVal = 98;
-  resetDriveSensors = true;
+  turnDesiredVal = 90;
+  resetDriveSensors = true;*/
+
+  pointTurn2(1, 90, 100);
 }
 
 ///////////////////////////////

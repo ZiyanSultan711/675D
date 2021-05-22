@@ -8,7 +8,7 @@ void pre_auton(void)
   Inert.calibrate();
   // waits for the Inertial Sensor to calibrate
   while (Inert.isCalibrating()) {
-    wait(100, msec);
+    wait(2000, msec);
   }
 }
 
@@ -22,6 +22,8 @@ void autonomous(void)
   //botAuton();
 
   //skillAuton();
+
+  //testAuto();
 
 }
 

@@ -98,12 +98,14 @@ int drivePID()
     else if (desiredVal == 0 && turnDesiredVal != 0) 
     {
       // Turn Movement PID
-      //int LeftMotorAverage = (LFPos + LBPos)/2;
-      //int RightMotorAverage = (RFPos + RBPos)/2;
+      int LeftMotorAverage = (LFPos + LBPos)/2;
+      int RightMotorAverage = (RFPos + RBPos)/2;
+      //int turnDiff = (LeftMotorAverage + RightMotorAverage)/2;
+      
       int turnDiff = inertVal;
 
       // Potential
-      errorT = turnDiff - turnDesiredVal;
+      errorT = turnDesiredVal - turnDiff;
 
       // Derivative
       derivativeT = errorT - prevErrorT;
@@ -120,7 +122,7 @@ int drivePID()
 
       // Code
       prevErrorT = errorT;
-      task::sleep(10);
+      task::sleep(1);
     }
     
     else if(desiredVal == 0 && turnDesiredVal == 0)
@@ -185,6 +187,47 @@ int turnPID()
   }
 
   return 1;
+}
+
+int pointTurn2(double direction, double degrees, double v) { // function to perform a decelerated point turn based
+                                                             // on the inertial sensor
+  /*double kP = 0.4;
+  double kI = 0.01;
+  double kD = 1.4;
+  int error;
+  int prevError = 0;
+  int derivative;
+  int totalError = 0;*/
+
+  //Inert.calibrate(2000);
+  //task::sleep(2000);
+
+  double x = Inert.rotation(deg) + (direction * degrees);
+  double y = Inert.rotation(deg);
+  while (v >= 0) {
+    errorT = y - x;
+    derivativeT = errorT - prevErrorT;
+    totalErrorT += errorT;
+    v = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
+
+    y = Inert.rotation(deg);
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(x);
+    Controller1.Screen.setCursor(3, 1);
+    Controller1.Screen.print(y);
+    LB.spin(directionType::fwd, v, pct);
+    RB.spin(directionType::rev, v, pct);
+    LF.spin(directionType::fwd, v, pct);
+    RF.spin(directionType::rev, v, pct);
+    task::sleep(40);
+    prevErrorT = errorT;
+  }
+  LB.stop(brakeType::hold);
+  RB.stop(brakeType::hold);
+  LF.stop(brakeType::hold);
+  RF.stop(brakeType::hold);
+  Controller1.Screen.print("stop");
+  return 0;
 }
 
 ////////////////////
