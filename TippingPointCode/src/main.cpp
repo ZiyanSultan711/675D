@@ -109,6 +109,22 @@ void usercontrol(void)
     arm.setBrake(brakeType::hold);
   }
 
+  //drive hold button
+  if(Controller1.ButtonLeft.pressing())
+  {
+    fl.stop();
+    fl.setBrake(brakeType::hold);
+
+    bl.stop();
+    bl.setBrake(brakeType::hold);
+
+    fr.stop();
+    fr.setBrake(brakeType::hold);
+
+    br.stop();
+    br.setBrake(brakeType::hold);
+  }
+
   
 
     wait(20, msec); 
