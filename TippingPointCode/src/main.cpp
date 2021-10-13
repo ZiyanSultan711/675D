@@ -60,10 +60,8 @@ int driveFwd() {
   return 1;
 }
 
-
 int mogoTailMacro() {
-  while(true)
-  {
+  while (true) {
     mogo.startRotateTo(-500, rotationUnits::deg, 70, velocityUnits::pct);
     tail.rotateTo(20, rotationUnits::deg, 20, velocityUnits::pct);
     mogoMacro = false;
@@ -77,24 +75,19 @@ void usercontrol(void) {
 
     bool mogoMacro = false;
 
-    if(Controller1.ButtonRight.pressing())
-    {
+    if (Controller1.ButtonRight.pressing()) {
       mogoMacro = true;
     }
 
-    if(mogoMacro == true)
-    {
+    if (mogoMacro == true) {
       task b(mogoTailMacro);
     }
-    
-    
+
     // mogo
     if (Controller1.ButtonB.pressing()) {
       // mogoCurve(1);
       mogo.spin(vex::directionType::fwd, 70, vex::velocityUnits::pct);
-    }
-
-    else if (Controller1.ButtonX.pressing()) {
+    } else if (Controller1.ButtonX.pressing()) {
       // mogoCurve(-1);
       mogo.spin(vex::directionType::fwd, -70, vex::velocityUnits::pct);
     } else {
@@ -145,7 +138,13 @@ void usercontrol(void) {
 
       br.stop();
       br.setBrake(brakeType::hold);
+    } else {
+      fl.setBrake(brakeType::coast);
+      bl.setBrake(brakeType::coast);
+      fr.setBrake(brakeType::coast);
+      br.setBrake(brakeType::coast);
     }
+    
 
     wait(20, msec);
   }
