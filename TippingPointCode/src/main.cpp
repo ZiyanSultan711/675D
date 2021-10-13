@@ -26,6 +26,8 @@ void autonomous(void) {
   // skillAuton();
 }
 
+bool mogoMacro = false;
+
 int mogoCurve(double velocity) {
   while (true) {
     double dist = mogo.rotation(vex::rotationUnits::deg);
@@ -58,9 +60,34 @@ int driveFwd() {
   return 1;
 }
 
+
+int mogoTailMacro() {
+  while(true)
+  {
+    mogo.startRotateTo(-500, rotationUnits::deg, 70, velocityUnits::pct);
+    tail.rotateTo(20, rotationUnits::deg, 20, velocityUnits::pct);
+    mogoMacro = false;
+  }
+  return 1;
+}
+
 void usercontrol(void) {
   while (1) {
     task a(driveFwd);
+
+    bool mogoMacro = false;
+
+    if(Controller1.ButtonRight.pressing())
+    {
+      mogoMacro = true;
+    }
+
+    if(mogoMacro == true)
+    {
+      task b(mogoTailMacro);
+    }
+    
+    
     // mogo
     if (Controller1.ButtonB.pressing()) {
       // mogoCurve(1);
