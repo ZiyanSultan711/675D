@@ -38,7 +38,7 @@ float driveSlow = 1.0;
 float turnSlow = 0.8;
 
 int inertVal = Inert.rotation(degrees);
-/*
+
 int drivePID()
 {
   while(enableDrivePID)
@@ -47,16 +47,16 @@ int drivePID()
     {
       resetDriveSensors = false;
 
-      LF.setPosition(0, degrees);
-      RF.setPosition(0, degrees);
-      RB.setPosition(0, degrees);
-      LB.setPosition(0, degrees);
+      fl.setPosition(0, degrees);
+      fr.setPosition(0, degrees);
+      br.setPosition(0, degrees);
+      bl.setPosition(0, degrees);
     }
 
-    int LFPos = LF.position(degrees);
-    int RFPos = RF.position(degrees);
-    int LBPos = RF.position(degrees);
-    int RBPos = RF.position(degrees);
+    int LFPos = fl.position(degrees);
+    int RFPos = fr.position(degrees);
+    int LBPos = bl.position(degrees);
+    int RBPos = br.position(degrees);
 
     if(desiredVal != 0 && turnDesiredVal == 0)
     {
@@ -77,10 +77,10 @@ int drivePID()
       double lateralMotorPower = (error * kP) + (derivative * kD) + (totalError * kI);
 
 
-      LB.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
-      RB.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
-      LF.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
-      RF.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      bl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      br.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      fl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      fr.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
 
       // Code
       prevError = error;
@@ -105,10 +105,10 @@ int drivePID()
 
       double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
 
-      LB.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
-      RB.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
-      LF.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
-      RF.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      bl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      br.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      fl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      fr.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
 
       // Code
       prevErrorT = errorT;
@@ -117,10 +117,10 @@ int drivePID()
     
     else if(desiredVal == 0 && turnDesiredVal == 0)
     {
-      LF.setBrake(brakeType::hold);
-      LB.setBrake(brakeType::hold);
-      RF.setBrake(brakeType::hold);
-      RB.setBrake(brakeType::hold);
+      fl.setBrake(brakeType::hold);
+      bl.setBrake(brakeType::hold);
+      fr.setBrake(brakeType::hold);
+      br.setBrake(brakeType::hold);
     }
     
   }
@@ -128,7 +128,7 @@ int drivePID()
   return 1;
 }
 
-
+/*
 int turnPID()
 {
   while(enableTurnPID)
