@@ -26,7 +26,10 @@ void autonomous(void) {
   // skillAuton();
 }
 
-bool mogoMacro = false;
+// Booleans
+bool mogoMacroBool = false;
+bool mogoManualBool = false;
+bool mogoIsDown = false;
 
 int mogoCurve(double velocity) {
   while (true) {
@@ -60,40 +63,67 @@ int driveFwd() {
   return 1;
 }
 
-int mogoTailMacro() {
-  while (true) {
-    mogo.startRotateTo(-500, rotationUnits::deg, 70, velocityUnits::pct);
-    tail.rotateTo(20, rotationUnits::deg, 20, velocityUnits::pct);
-    mogoMacro = false;
+// Macro Tasks
+int mogoMacro() {
+  if(mogoIsDown == false)
+  {
+    mogo.rotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
+    mogoMacroBool = false;
+    mogoIsDown = true;
+  }
+  else if(mogoIsDown == true)
+  {
+    mogo.rotateTo(-15, rotationUnits::deg, 100, velocityUnits::pct);
+    mogoMacroBool = false;
+    mogoIsDown = false;
   }
   return 1;
 }
 
+int mogoManual()
+{
+  mogo.spin(directionType::fwd, -100, velocityUnits::pct);
+  mogoManualBool = true;
+  return 1;
+}
+
+// Functions that start the task
+void startMogoMacro()
+{
+  mogoMacroBool = true;
+  task::stop(mogoManual);
+  task b(mogoMacro);
+}
+
+void startMogoManual()
+{
+  mogoManualBool = true;
+  task::stop(mogoMacro);
+  task c(mogoManual);
+}
+
 void usercontrol(void) {
   while (1) {
+      fl.setBrake(brakeType::hold);
+      bl.setBrake(brakeType::hold);
+      fr.setBrake(brakeType::hold);
+      br.setBrake(brakeType::hold);
+
     task a(driveFwd);
+    
+    // mogoMacros
+    Controller1.ButtonB.pressed(startMogoMacro);
+    //Controller1.ButtonX.pressed(startMogoManual);
 
-    bool mogoMacro = false;
-
-    if (Controller1.ButtonRight.pressing()) {
-      mogoMacro = true;
-    }
-
-    if (mogoMacro == true) {
-      task b(mogoTailMacro);
-    }
-
-    // mogo
-    if (Controller1.ButtonB.pressing()) {
-      // mogoCurve(1);
-      mogo.spin(vex::directionType::fwd, 70, vex::velocityUnits::pct);
-    } else if (Controller1.ButtonX.pressing()) {
+    // mogo Manual
+    /*if (Controller1.ButtonX.pressing() && Controller1.ButtonUp.pressing()) {
       // mogoCurve(-1);
-      mogo.spin(vex::directionType::fwd, -70, vex::velocityUnits::pct);
-    } else {
+      task::stop(mogoMacro);
+      mogo.spin(vex::directionType::fwd, -100, vex::velocityUnits::pct);
+    } else if(mogoMacroBool == false && !(Controller1.ButtonX.pressing() && Controller1.ButtonUp.pressing())) {
       mogo.stop();
       mogo.setBrake(brakeType::hold);
-    }
+    }*/
 
     // lift
     if (Controller1.ButtonR1.pressing()) {
@@ -125,28 +155,7 @@ void usercontrol(void) {
       arm.setBrake(brakeType::hold);
     }
 
-    // drive hold button
-    if (Controller1.ButtonLeft.pressing()) {
-      fl.stop();
-      fl.setBrake(brakeType::hold);
-
-      bl.stop();
-      bl.setBrake(brakeType::hold);
-
-      fr.stop();
-      fr.setBrake(brakeType::hold);
-
-      br.stop();
-      br.setBrake(brakeType::hold);
-    } else {
-      fl.setBrake(brakeType::coast);
-      bl.setBrake(brakeType::coast);
-      fr.setBrake(brakeType::coast);
-      br.setBrake(brakeType::coast);
-    }
-
-    wait(20, msec);
-  }
+}
 }
 
 int main() {
