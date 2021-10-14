@@ -18,14 +18,16 @@ int turnRightDesiredVal = 0;
 int turnLeftDesiredVal = 0;
 int turnDesiredVal = 0;
 
-int error; // Sensor Value - Desired Value  : Positional Value
-int prevError = 0; // Position 10ms Ago
-int derivative; // Difference between Error and Previous Error  : Calculates Speed
+int error;          // Sensor Value - Desired Value  : Positional Value
+int prevError = 0;  // Position 10ms Ago
+int derivative;     // Difference between Error and Previous Error  : Calculates
+                    // Speed
 int totalError = 0; // totalError = totalError + error
 
-int errorT; // Sensor Value - Desired Value  : Positional Value
+int errorT;         // Sensor Value - Desired Value  : Positional Value
 int prevErrorT = 0; // Position 20ms Ago
-int derivativeT; // Difference between Error and Previous Error  : Calculates Speed
+int derivativeT;    // Difference between Error and Previous Error  : Calculates
+                    // Speed
 int totalErrorT = 0; // totalError = totalError + error
 
 // Variables Modified for Use
@@ -39,12 +41,9 @@ float turnSlow = 0.8;
 
 int inertVal = Inert.rotation(degrees);
 
-int drivePID()
-{
-  while(enableDrivePID)
-  {
-    if(resetDriveSensors)
-    {
+int drivePID() {
+  while (enableDrivePID) {
+    if (resetDriveSensors) {
       resetDriveSensors = false;
 
       fl.setPosition(0, degrees);
@@ -58,12 +57,11 @@ int drivePID()
     int LBPos = bl.position(degrees);
     int RBPos = br.position(degrees);
 
-    if(desiredVal != 0 && turnDesiredVal == 0)
-    {
+    if (desiredVal != 0 && turnDesiredVal == 0) {
       // Lateral Movement PID
-      int LeftMotorAverage = (LFPos + LBPos)/2;
-      int RightMotorAverage = (RFPos + RBPos)/2;
-      int averagePosition = (LeftMotorAverage + RightMotorAverage)/2;
+      int LeftMotorAverage = (LFPos + LBPos) / 2;
+      int RightMotorAverage = (RFPos + RBPos) / 2;
+      int averagePosition = (LeftMotorAverage + RightMotorAverage) / 2;
 
       // Potential
       error = averagePosition - desiredVal;
@@ -74,25 +72,28 @@ int drivePID()
       // Integral
       totalError += error;
 
-      double lateralMotorPower = (error * kP) + (derivative * kD) + (totalError * kI);
+      double lateralMotorPower =
+          (error * kP) + (derivative * kD) + (totalError * kI);
 
-
-      bl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
-      br.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
-      fl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
-      fr.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow, vex::velocityUnits::pct);
+      bl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow,
+              vex::velocityUnits::pct);
+      br.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow,
+              vex::velocityUnits::pct);
+      fl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow,
+              vex::velocityUnits::pct);
+      fr.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow,
+              vex::velocityUnits::pct);
 
       // Code
       prevError = error;
       task::sleep(10);
     }
-    
-    else if (desiredVal == 0 && turnDesiredVal != 0) 
-    {
+
+    else if (desiredVal == 0 && turnDesiredVal != 0) {
       // Turn Movement PID
-      int LeftMotorAverage = (LFPos + LBPos)/2;
-      int RightMotorAverage = (RFPos + RBPos)/2;
-      int turnDiff = (LeftMotorAverage + RightMotorAverage)/2;
+      int LeftMotorAverage = (LFPos + LBPos) / 2;
+      int RightMotorAverage = (RFPos + RBPos) / 2;
+      int turnDiff = (LeftMotorAverage + RightMotorAverage) / 2;
 
       // Potential
       errorT = turnDiff - turnDesiredVal;
@@ -103,26 +104,29 @@ int drivePID()
       // Integral
       totalErrorT += errorT;
 
-      double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
+      double turnMotorPower =
+          (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
 
-      bl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
-      br.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
-      fl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
-      fr.spin(vex::directionType::rev, (turnMotorPower)*turnSlow, vex::velocityUnits::pct);
+      bl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
+              vex::velocityUnits::pct);
+      br.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
+              vex::velocityUnits::pct);
+      fl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
+              vex::velocityUnits::pct);
+      fr.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
+              vex::velocityUnits::pct);
 
       // Code
       prevErrorT = errorT;
       task::sleep(10);
     }
-    
-    else if(desiredVal == 0 && turnDesiredVal == 0)
-    {
+
+    else if (desiredVal == 0 && turnDesiredVal == 0) {
       fl.setBrake(brakeType::hold);
       bl.setBrake(brakeType::hold);
       fr.setBrake(brakeType::hold);
       br.setBrake(brakeType::hold);
     }
-    
   }
 
   return 1;
@@ -143,12 +147,12 @@ int turnPID()
       LB.setPosition(0, degrees);
     }
 
-    
+
     int LFPos = LF.position(degrees);
     int RFPos = RF.position(degrees);
     int LBPos = RF.position(degrees);
     int RBPos = RF.position(degrees);
-    
+
     // Lateral Movement PID
     int LeftMotorAverage = (LFPos + LBPos)/2;
     int RightMotorAverage = (RFPos + RBPos)/2;
@@ -163,13 +167,15 @@ int turnPID()
     // Integral
     totalErrorT += errorT;
 
-    double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
+    double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT
+* kIT);
 
     float x = 0.6;
-    LB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
-    RB.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
-    LF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
-    RF.spin(vex::directionType::rev, (turnMotorPower)*x, vex::velocityUnits::pct);
+    LB.spin(vex::directionType::rev, (turnMotorPower)*x,
+vex::velocityUnits::pct); RB.spin(vex::directionType::rev, (turnMotorPower)*x,
+vex::velocityUnits::pct); LF.spin(vex::directionType::rev, (turnMotorPower)*x,
+vex::velocityUnits::pct); RF.spin(vex::directionType::rev, (turnMotorPower)*x,
+vex::velocityUnits::pct);
 
     // Code
     prevErrorT = errorT;

@@ -144,7 +144,6 @@ void usercontrol(void) {
       fr.setBrake(brakeType::coast);
       br.setBrake(brakeType::coast);
     }
-    
 
     wait(20, msec);
   }
