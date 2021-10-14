@@ -12,7 +12,7 @@ void topAuton(void)
   resetDriveSensors = true;
   desiredVal = 200;
   task::sleep(1000);
-  desiredVal = 0;
+  //desiredVal = 0;
 
 }
 

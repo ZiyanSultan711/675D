@@ -90,9 +90,9 @@ int drivePID()
     else if (desiredVal == 0 && turnDesiredVal != 0) 
     {
       // Turn Movement PID
-      //int LeftMotorAverage = (LFPos + LBPos)/2;
-      //int RightMotorAverage = (RFPos + RBPos)/2;
-      int turnDiff = inertVal;
+      int LeftMotorAverage = (LFPos + LBPos)/2;
+      int RightMotorAverage = (RFPos + RBPos)/2;
+      int turnDiff = (LeftMotorAverage + RightMotorAverage)/2;
 
       // Potential
       errorT = turnDiff - turnDesiredVal;

@@ -21,7 +21,7 @@ void autonomous(void) {
     resetDriveSensors = true;
   */
 
-  // topAuton();
+  topAuton();
   // botAuton();
   // skillAuton();
 }
