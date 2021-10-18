@@ -2,7 +2,6 @@ using namespace vex;
 
 extern brain Brain;
 
-
 extern competition Competition;
 extern controller Controller1;
 extern motor fl;
@@ -14,6 +13,5 @@ extern motor mogo;
 extern motor tail;
 extern motor arm;
 extern inertial Inert;
-
 
 void vexcodeInit(void);

@@ -15,14 +15,16 @@ extern int turnRightDesiredVal;
 extern int turnLeftDesiredVal;
 extern int turnDesiredVal;
 
-extern int error; // Sensor Value - Desired Value  : Positional Value
-extern int prevError; // Position 10ms Ago
-extern int derivative; // Difference between Error and Previous Error  : Calculates Speed
+extern int error;      // Sensor Value - Desired Value  : Positional Value
+extern int prevError;  // Position 10ms Ago
+extern int derivative; // Difference between Error and Previous Error  :
+                       // Calculates Speed
 extern int totalError; // totalError = totalError + error
 
-extern int errorT; // Sensor Value - Desired Value  : Positional Value
-extern int prevErrorT; // Position 20ms Ago
-extern int derivativeT; // Difference between Error and Previous Error  : Calculates Speed
+extern int errorT;      // Sensor Value - Desired Value  : Positional Value
+extern int prevErrorT;  // Position 20ms Ago
+extern int derivativeT; // Difference between Error and Previous Error  :
+                        // Calculates Speed
 extern int totalErrorT; // totalError = totalError + error
 
 // Variables Modified for Use
@@ -38,6 +40,5 @@ extern int drivePID();
 extern int turnPID();
 
 extern int inertVal;
-
 
 ////////////////////
