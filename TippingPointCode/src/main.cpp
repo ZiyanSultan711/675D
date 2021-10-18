@@ -1,5 +1,7 @@
 #include "vex.h" //CHECK
 using namespace vex;
+//DATE: 10/18
+//TIME: 1:35 PM
 
 void pre_auton(void) {
   vexcodeInit();
@@ -168,5 +170,3 @@ int main() {
     wait(100, msec);
   }
 }
-
-//ignore
