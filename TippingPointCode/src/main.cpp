@@ -23,15 +23,18 @@ void autonomous(void) {
     resetDriveSensors = true;
   */
 
-  topAuton();
+  // topAuton();
   // botAuton();
   // skillAuton();
+  scrapautoblue();
+  // scrapautored();
 }
 
 // Booleans
 bool mogoMacroBool = false;
 bool mogoManualBool = false;
 bool mogoIsDown = false;
+bool driveLock = false;
 
 int mogoCurve(double velocity) {
   while (true) {
@@ -104,12 +107,32 @@ void startMogoManual()
   task c(mogoManual);
 }
 
+void switchDriveLock()
+{
+  if(driveLock)
+    driveLock = false;
+  else if(driveLock == false)
+    driveLock = true;
+}
+
 void usercontrol(void) {
   while (1) {
-      fl.setBrake(brakeType::hold);
-      bl.setBrake(brakeType::hold);
-      fr.setBrake(brakeType::hold);
-      br.setBrake(brakeType::hold);
+    if(driveLock == false)
+    {
+      fl.setBrake(brakeType::coast);
+      bl.setBrake(brakeType::coast);
+      fr.setBrake(brakeType::coast);
+      br.setBrake(brakeType::coast);
+    }
+    else if(driveLock == true)
+    {
+      fl.setBrake(brakeType::brake);
+      bl.setBrake(brakeType::brake);
+      fr.setBrake(brakeType::brake);
+      br.setBrake(brakeType::brake);
+    }
+    Controller1.ButtonLeft.pressed(switchDriveLock);
+
 
     task a(driveFwd);
     
