@@ -138,17 +138,6 @@ void usercontrol(void) {
     
     // mogoMacros
     Controller1.ButtonB.pressed(startMogoMacro);
-    //Controller1.ButtonX.pressed(startMogoManual);
-
-    // mogo Manual
-    /*if (Controller1.ButtonX.pressing() && Controller1.ButtonUp.pressing()) {
-      // mogoCurve(-1);
-      task::stop(mogoMacro);
-      mogo.spin(vex::directionType::fwd, -100, vex::velocityUnits::pct);
-    } else if(mogoMacroBool == false && !(Controller1.ButtonX.pressing() && Controller1.ButtonUp.pressing())) {
-      mogo.stop();
-      mogo.setBrake(brakeType::hold);
-    }*/
 
     // lift
     if (Controller1.ButtonR1.pressing()) {
