@@ -26,8 +26,7 @@ void autonomous(void) {
   // topAuton();
   // botAuton();
   // skillAuton();
-  scrapautoblue();
-  // scrapautored();
+  scrapauto();
 }
 
 // Booleans
@@ -78,7 +77,7 @@ int mogoMacro() {
   }
   else if(mogoIsDown == true)
   {
-    mogo.rotateTo(-15, rotationUnits::deg, 100, velocityUnits::pct);
+    mogo.rotateTo(-25, rotationUnits::deg, 100, velocityUnits::pct);
     mogoMacroBool = false;
     mogoIsDown = false;
   }
@@ -117,6 +116,7 @@ void switchDriveLock()
 
 void usercontrol(void) {
   while (1) {
+    
     if(driveLock == false)
     {
       fl.setBrake(brakeType::coast);
@@ -126,10 +126,10 @@ void usercontrol(void) {
     }
     else if(driveLock == true)
     {
-      fl.setBrake(brakeType::brake);
-      bl.setBrake(brakeType::brake);
-      fr.setBrake(brakeType::brake);
-      br.setBrake(brakeType::brake);
+      fl.setBrake(brakeType::hold);
+      bl.setBrake(brakeType::hold);
+      fr.setBrake(brakeType::hold);
+      br.setBrake(brakeType::hold);
     }
     Controller1.ButtonLeft.pressed(switchDriveLock);
 
