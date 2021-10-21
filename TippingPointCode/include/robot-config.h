@@ -13,5 +13,6 @@ extern motor mogo;
 extern motor tail;
 extern motor arm;
 extern inertial Inert;
+extern rotation mogoPot;
 
 void vexcodeInit(void);

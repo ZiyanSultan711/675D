@@ -1,7 +1,7 @@
 #include "vex.h" //CHECK
 using namespace vex;
-//DATE: 10/18
-//TIME: 1:35 PM
+//DATE: 10/21
+//TIME: 2:33 PM
 
 void pre_auton(void) {
   vexcodeInit();

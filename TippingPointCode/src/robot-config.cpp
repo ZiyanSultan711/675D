@@ -16,6 +16,7 @@ motor mogo = vex::motor(vex::PORT3, false);  // 600 rpm
 motor tail = vex::motor(vex::PORT17, false); // 600 rpm
 motor arm = vex::motor(vex::PORT9, false);   // 600 rpm
 inertial Inert = vex::inertial(vex::PORT21);
+rotation mogoPot = rotation(vex::PORT15);
 
 void vexcodeInit(void) {
   // Nothing to initialize
