@@ -14,7 +14,20 @@ void pre_auton(void) {
 }
 
 void autonomous(void) {
+<<<<<<< HEAD
   topAuton();
+=======
+  /*
+    task StartDrivePID(drivePID);
+    enableDrivePID = true;
+    resetDriveSensors = true;
+    desiredVal = 0;
+    turnDesiredVal = 98;
+    resetDriveSensors = true;
+  */
+
+  // topAuton();
+>>>>>>> parent of 8dac75c (small changes pt.2)
   // botAuton();
   // skillAuton();
   //scrapauto();

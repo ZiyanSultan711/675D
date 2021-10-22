@@ -73,7 +73,20 @@ int drivePID(){
     }  else {
     totalError = 0; 
     }
+<<<<<<< HEAD
     //totalError += error;
+=======
+    
+    else if (desiredVal == 0 && turnDesiredVal != 0) 
+    {
+      // Turn Movement PID
+      //int LeftMotorAverage = (LFPos + LBPos)/2;
+      //int RightMotorAverage = (RFPos + RBPos)/2;
+      int turnDiff = inertVal;
+
+      // Potential
+      errorT = turnDiff - turnDesiredVal;
+>>>>>>> parent of 8dac75c (small changes pt.2)
 
     //This would cap the integral
     totalError = abs(totalError) > maxIntegral ? signnum_c(totalError) * maxIntegral : totalError;

@@ -9,6 +9,11 @@ void topAuton(void) {
   desiredValue = 300;
   desiredTurnValue = 600;
   task::sleep(1000);
+<<<<<<< HEAD
+=======
+  desiredVal = 0;
+
+>>>>>>> parent of 8dac75c (small changes pt.2)
 }
 
 void botAuton(void) {}
