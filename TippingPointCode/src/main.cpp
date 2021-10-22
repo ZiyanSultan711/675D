@@ -14,19 +14,10 @@ void pre_auton(void) {
 }
 
 void autonomous(void) {
-  /*
-    task StartDrivePID(drivePID);
-    enableDrivePID = true;
-    resetDriveSensors = true;
-    desiredVal = 0;
-    turnDesiredVal = 98;
-    resetDriveSensors = true;
-  */
-
-  // topAuton();
+  topAuton();
   // botAuton();
   // skillAuton();
-  scrapauto();
+  //scrapauto();
 }
 
 // Booleans
@@ -116,6 +107,8 @@ void switchDriveLock()
 
 void usercontrol(void) {
   while (1) {
+
+    enableDrivePID = false;
     
     if(driveLock == false)
     {

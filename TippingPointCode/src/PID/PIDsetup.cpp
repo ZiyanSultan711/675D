@@ -3,186 +3,124 @@ using namespace vex;
 
 // PID CONTROLLER //
 
-// Settings
-double kP = 0.45;
+//Settings
+double kP = 0.0;
 double kI = 0.0;
-double kD = 0.15;
+double kD = 0.0;
+double turnkP = 0.0;
+double turnkI = 0.0;
+double turnkD = 0.0;
+int maxTurnIntegral = 300; // These cap the integrals
+int maxIntegral = 300;
+int integralBound = 5; //If error is outside the bounds, then apply the integral. This is a buffer with +-integralBound degrees
 
-double kPT = 0.4;
-double kIT = 0.0;
-double kDT = 0.35;
+//Autonomous Settings
+int desiredValue = 200;
+int desiredTurnValue = 0;
 
-// Auton Settings
-int desiredVal = 0;
-int turnRightDesiredVal = 0;
-int turnLeftDesiredVal = 0;
-int turnDesiredVal = 0;
+int error; //SensorValue - DesiredValue : Position
+int prevError = 0; //Position 20 miliseconds ago
+int derivative; // error - prevError : Speed
+int totalError = 0; //totalError = totalError + error
 
-int error;          // Sensor Value - Desired Value  : Positional Value
-int prevError = 0;  // Position 10ms Ago
-int derivative;     // Difference between Error and Previous Error  : Calculates
-                    // Speed
-int totalError = 0; // totalError = totalError + error
+int turnError; //SensorValue - DesiredValue : Position
+int turnPrevError = 0; //Position 20 miliseconds ago
+int turnDerivative; // error - prevError : Speed
+int turnTotalError = 0; //totalError = totalError + error
 
-int errorT;         // Sensor Value - Desired Value  : Positional Value
-int prevErrorT = 0; // Position 20ms Ago
-int derivativeT;    // Difference between Error and Previous Error  : Calculates
-                    // Speed
-int totalErrorT = 0; // totalError = totalError + error
-
-// Variables Modified for Use
-bool enableDrivePID = false;
-bool enableTurnRightPID = false;
-bool enableTurnPID = false;
 bool resetDriveSensors = false;
 
-float driveSlow = 1.0;
-float turnSlow = 0.8;
+//Variables modified for use
+bool enableDrivePID = true;
 
-int inertVal = Inert.rotation(degrees);
+//Pasted from a C++ resource
+double signnum_c(double x) {
+  if (x > 0.0) return 1.0;
+  if (x < 0.0) return -1.0;
+  return x;
+}
 
-int drivePID() {
-  while (enableDrivePID) {
+int drivePID(){
+  
+  while(enableDrivePID){
+
     if (resetDriveSensors) {
       resetDriveSensors = false;
-
-      fl.setPosition(0, degrees);
-      fr.setPosition(0, degrees);
-      br.setPosition(0, degrees);
-      bl.setPosition(0, degrees);
+      fl.setPosition(0,degrees);
+      fr.setPosition(0,degrees);
     }
 
-    int LFPos = fl.position(degrees);
-    int RFPos = fr.position(degrees);
-    int LBPos = bl.position(degrees);
-    int RBPos = br.position(degrees);
 
-    if (desiredVal != 0 && turnDesiredVal == 0) {
-      // Lateral Movement PID
-      int LeftMotorAverage = (LFPos + LBPos) / 2;
-      int RightMotorAverage = (RFPos + RBPos) / 2;
-      int averagePosition = (LeftMotorAverage + RightMotorAverage) / 2;
+    //Get the position of both motors
+    int leftMotorPosition = fl.position(degrees);
+    int rightMotorPosition = fr.position(degrees);
 
-      // Potential
-      error = averagePosition - desiredVal;
+    ///////////////////////////////////////////
+    //Lateral movement PID
+    /////////////////////////////////////////////////////////////////////
+    //Get average of the two motors
+    int averagePosition = (rightMotorPosition - leftMotorPosition)/2;
 
-      // Derivative
-      derivative = error - prevError;
+    //Potential
+    error = averagePosition - desiredValue;// swap ------------------------------------------------------------- 
 
-      // Integral
-      totalError += error;
+    //Derivative
+    derivative = error - prevError;
 
-      double lateralMotorPower =
-          (error * kP) + (derivative * kD) + (totalError * kI);
-
-      bl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
-      br.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
-      fl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
-      fr.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
-
-      // Code
-      prevError = error;
-      task::sleep(10);
+    //Integral
+    if(abs(error) < integralBound){
+    totalError+=error; 
+    }  else {
+    totalError = 0; 
     }
+    //totalError += error;
 
-    else if (desiredVal == 0 && turnDesiredVal != 0) {
-      // Turn Movement PID
-      int LeftMotorAverage = (LFPos + LBPos) / 2;
-      int RightMotorAverage = (RFPos + RBPos) / 2;
-      int turnDiff = (LeftMotorAverage + RightMotorAverage) / 2;
+    //This would cap the integral
+    totalError = abs(totalError) > maxIntegral ? signnum_c(totalError) * maxIntegral : totalError;
 
-      // Potential
-      errorT = turnDiff - turnDesiredVal;
+    double lateralMotorPower = error * kP + derivative * kD + totalError * kI;
+    /////////////////////////////////////////////////////////////////////
 
-      // Derivative
-      derivativeT = errorT - prevErrorT;
 
-      // Integral
-      totalErrorT += errorT;
+    ///////////////////////////////////////////
+    //Turning movement PID
+    /////////////////////////////////////////////////////////////////////
+    //Get average of the two motors
+    int turnDifference = leftMotorPosition - rightMotorPosition;
 
-      double turnMotorPower =
-          (errorT * kPT) + (derivativeT * kDT) + (totalErrorT * kIT);
+    //Potential
+    turnError = turnDifference - desiredTurnValue; // swap -------------------------------------------------------------
 
-      bl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
-              vex::velocityUnits::pct);
-      br.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
-              vex::velocityUnits::pct);
-      fl.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
-              vex::velocityUnits::pct);
-      fr.spin(vex::directionType::rev, (turnMotorPower)*turnSlow,
-              vex::velocityUnits::pct);
+    //Derivative
+    turnDerivative = turnError - turnPrevError;
 
-      // Code
-      prevErrorT = errorT;
-      task::sleep(10);
+    //Integral
+    if(abs(error) < integralBound){
+    turnTotalError+=turnError; 
+    }  else {
+    turnTotalError = 0; 
     }
+    //turnTotalError += turnError;
 
-    else if (desiredVal == 0 && turnDesiredVal == 0) {
-      fl.setBrake(brakeType::hold);
-      bl.setBrake(brakeType::hold);
-      fr.setBrake(brakeType::hold);
-      br.setBrake(brakeType::hold);
-    }
+    //This would cap the integral
+    turnTotalError = abs(turnTotalError) > maxTurnIntegral ? signnum_c(turnTotalError) * maxTurnIntegral : turnTotalError;
+
+    double turnMotorPower = turnError * turnkP + turnDerivative * turnkD + turnTotalError * turnkI;
+    /////////////////////////////////////////////////////////////////////
+
+    fl.spin(reverse, lateralMotorPower + turnMotorPower, voltageUnits::volt);
+    bl.spin(reverse, lateralMotorPower + turnMotorPower, voltageUnits::volt);
+    fr.spin(forward, lateralMotorPower - turnMotorPower, voltageUnits::volt);
+    br.spin(forward, lateralMotorPower - turnMotorPower, voltageUnits::volt);
+
+
+    
+
+    prevError = error;
+    turnPrevError = turnError;
+    vex::task::sleep(20);
+
   }
 
   return 1;
 }
-
-/*
-int turnPID()
-{
-  while(enableTurnPID)
-  {
-    if(resetDriveSensors)
-    {
-      resetDriveSensors = false;
-
-      LF.setPosition(0, degrees);
-      RF.setPosition(0, degrees);
-      RB.setPosition(0, degrees);
-      LB.setPosition(0, degrees);
-    }
-
-
-    int LFPos = LF.position(degrees);
-    int RFPos = RF.position(degrees);
-    int LBPos = RF.position(degrees);
-    int RBPos = RF.position(degrees);
-
-    // Lateral Movement PID
-    int LeftMotorAverage = (LFPos + LBPos)/2;
-    int RightMotorAverage = (RFPos + RBPos)/2;
-    int turnDiff = (LeftMotorAverage + RightMotorAverage)/2;
-
-    // Potential
-    errorT = turnDiff - turnDesiredVal;
-
-    // Derivative
-    derivativeT = errorT - prevErrorT;
-
-    // Integral
-    totalErrorT += errorT;
-
-    double turnMotorPower = (errorT * kPT) + (derivativeT * kDT) + (totalErrorT
-* kIT);
-
-    float x = 0.6;
-    LB.spin(vex::directionType::rev, (turnMotorPower)*x,
-vex::velocityUnits::pct); RB.spin(vex::directionType::rev, (turnMotorPower)*x,
-vex::velocityUnits::pct); LF.spin(vex::directionType::rev, (turnMotorPower)*x,
-vex::velocityUnits::pct); RF.spin(vex::directionType::rev, (turnMotorPower)*x,
-vex::velocityUnits::pct);
-
-    // Code
-    prevErrorT = errorT;
-    task::sleep(10);
-  }
-
-  return 1;
-}
-*/
-////////////////////

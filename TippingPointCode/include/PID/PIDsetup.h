@@ -1,44 +1,33 @@
-// PID CONTROLLER //
+double kP;
+double kI;
+double kD;
+double turnkP;
+double turnkI;
+double turnkD;
+int maxTurnIntegral; // These cap the integrals
+int maxIntegral;
+int integralBound; //If error is outside the bounds, then apply the integral. This is a buffer with +-integralBound degrees
 
-// Settings
-extern double kP;
-extern double kI;
-extern double kD;
+//Autonomous Settings
+int desiredValue;
+int desiredTurnValue;
 
-extern double kPT;
-extern double kIT;
-extern double kDT;
+int error; //SensorValue - DesiredValue : Position
+int prevError; //Position 20 miliseconds ago
+int derivative; // error - prevError : Speed
+int totalError; //totalError = totalError + error
 
-// Auton Settings
-extern int desiredVal;
-extern int turnRightDesiredVal;
-extern int turnLeftDesiredVal;
-extern int turnDesiredVal;
+int turnError; //SensorValue - DesiredValue : Position
+int turnPrevError; //Position 20 miliseconds ago
+int turnDerivative; // error - prevError : Speed
+int turnTotalError; //totalError = totalError + error
 
-extern int error;      // Sensor Value - Desired Value  : Positional Value
-extern int prevError;  // Position 10ms Ago
-extern int derivative; // Difference between Error and Previous Error  :
-                       // Calculates Speed
-extern int totalError; // totalError = totalError + error
+bool resetDriveSensors;
 
-extern int errorT;      // Sensor Value - Desired Value  : Positional Value
-extern int prevErrorT;  // Position 20ms Ago
-extern int derivativeT; // Difference between Error and Previous Error  :
-                        // Calculates Speed
-extern int totalErrorT; // totalError = totalError + error
+//Variables modified for use
+bool enableDrivePID;
 
-// Variables Modified for Use
-extern bool enableDrivePID;
-extern bool enableTurnRightPID;
-extern bool enableTurnPID;
-extern bool resetDriveSensors;
+//Pasted from a C++ resource
+double signnum_c(double x);
 
-extern float driveSlow;
-extern float turnSlow;
-
-extern int drivePID();
-extern int turnPID();
-
-extern int inertVal;
-
-////////////////////
+int drivePID();
