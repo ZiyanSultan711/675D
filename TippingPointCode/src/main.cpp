@@ -1,7 +1,8 @@
-#include "vex.h" //CHECK
+#include "vex.h"      //CHECK
 using namespace vex;
 
-void pre_auton(void) {
+void pre_auton(void) 
+{
   vexcodeInit();
   Inert = vex::inertial(vex::PORT21);
   Inert.calibrate();
@@ -11,6 +12,7 @@ void pre_auton(void) {
   }
 }
 
+<<<<<<< HEAD
 void autonomous(void) {
   /*
     task StartDrivePID(drivePID);
@@ -24,6 +26,22 @@ void autonomous(void) {
   topAuton();
   // botAuton();
   // skillAuton();
+=======
+void autonomous(void) 
+{
+/*
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+  resetDriveSensors = true;
+  desiredVal = 0;
+  turnDesiredVal = 98;
+  resetDriveSensors = true;
+*/
+
+  //topAuton();
+  //botAuton();
+  //skillAuton();
+>>>>>>> parent of 13b35a9 (start of macro)
 }
 
 // Booleans
@@ -35,8 +53,7 @@ int mogoCurve(double velocity) {
   while (true) {
     double dist = mogo.rotation(vex::rotationUnits::deg);
     if (dist < 400) {
-      mogo.spin(vex::directionType::fwd,
-                velocity * (20 + (50 * ((1900 + dist) / 600))),
+      mogo.spin(vex::directionType::fwd, velocity*(20 + (50 * ((1900 + dist) / 600))),
                 vex::velocityUnits::pct);
     } else {
       mogo.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
@@ -45,24 +62,25 @@ int mogoCurve(double velocity) {
   return 1;
 }
 
-int driveFwd() {
-  while (true) {
-    fl.spin(vex::directionType::fwd,
-            -Controller1.Axis3.value() - (Controller1.Axis1.value() * .5),
-            vex::velocityUnits::pct);
-    bl.spin(vex::directionType::rev,
-            Controller1.Axis3.value() + (Controller1.Axis1.value() * .5),
-            vex::velocityUnits::pct);
-    fr.spin(vex::directionType::fwd,
-            Controller1.Axis3.value() - (Controller1.Axis1.value() * .5),
-            vex::velocityUnits::pct);
-    br.spin(vex::directionType::rev,
-            -Controller1.Axis3.value() + (Controller1.Axis1.value() * .5),
-            vex::velocityUnits::pct);
-  }
-  return 1;
-}
+void usercontrol(void) 
+{
+  enableDrivePID = false;
+  enableTurnRightPID = false;
+  while (1) 
+  {
+    fl.spin(vex::directionType::fwd, -Controller1.Axis3.value() - (Controller1.Axis1.value() * .5), vex::velocityUnits::pct);
+    bl.spin(vex::directionType::rev, Controller1.Axis3.value() + (Controller1.Axis1.value() * .5), vex::velocityUnits::pct);
+    fr.spin(vex::directionType::fwd, Controller1.Axis3.value() - (Controller1.Axis1.value() * .5), vex::velocityUnits::pct);
+    br.spin(vex::directionType::rev, -Controller1.Axis3.value() + (Controller1.Axis1.value() * .5), vex::velocityUnits::pct); //drive code (turning is slowed to .7 cuz i suck but ishaan is good)
 
+//mogo 
+  if (Controller1.ButtonB.pressing())
+  {
+    //mogoCurve(1);
+    mogo.spin(vex::directionType::fwd, 70, vex::velocityUnits::pct);
+  }
+
+<<<<<<< HEAD
 // Macro Tasks
 int mogoMacro() {
   if(mogoIsDown == false)
@@ -124,41 +142,87 @@ void usercontrol(void) {
       mogo.stop();
       mogo.setBrake(brakeType::hold);
     }*/
+=======
+  else if (Controller1.ButtonX.pressing()) {
+    //mogoCurve(-1);
+    mogo.spin(vex::directionType::fwd, -70, vex::velocityUnits::pct);
+  }
+  else
+  {
+    mogo.stop();
+    mogo.setBrake(brakeType::hold);
+  }
 
-    // lift
-    if (Controller1.ButtonR1.pressing()) {
-      lift.spin(directionType::fwd, 100, velocityUnits::pct);
-    } else if (Controller1.ButtonR2.pressing()) {
-      lift.spin(directionType::fwd, -100, velocityUnits::pct);
-    } else {
-      lift.stop();
-      lift.setBrake(brakeType::hold);
-    }
+//lift
+  if (Controller1.ButtonR1.pressing())
+  {
+    lift.spin(directionType::fwd, 100, velocityUnits::pct);
+  }
+  else if(Controller1.ButtonR2.pressing())
+  {
+    lift.spin(directionType::fwd, -100, velocityUnits::pct);
+  }
+  else {
+    lift.stop();
+    lift.setBrake(brakeType::hold);
+  }
+>>>>>>> parent of 13b35a9 (start of macro)
 
-    // tail
-    if (Controller1.ButtonUp.pressing()) {
-      tail.spin(directionType::fwd, -30, velocityUnits::pct);
-    } else if (Controller1.ButtonDown.pressing()) {
-      tail.spin(directionType::fwd, 30, velocityUnits::pct);
-    } else {
-      tail.stop();
-      tail.setBrake(brakeType::hold);
-    }
+  //tail
+  if (Controller1.ButtonUp.pressing()) {
+    tail.spin(directionType::fwd, -30, velocityUnits::pct);
+  }
+  else if (Controller1.ButtonDown.pressing()) {
+    tail.spin(directionType::fwd, 30, velocityUnits::pct);
+  }
+  else
+  {
+    tail.stop();
+    tail.setBrake(brakeType::hold);
+  }
 
-    // arm
-    if (Controller1.ButtonL2.pressing()) {
-      arm.spin(directionType::fwd, 100, velocityUnits::pct);
-    } else if (Controller1.ButtonL1.pressing()) {
-      arm.spin(directionType::fwd, -100, velocityUnits::pct);
-    } else {
-      arm.stop();
-      arm.setBrake(brakeType::hold);
-    }
+  //arm
+  if (Controller1.ButtonL2.pressing()) {
+    arm.spin(directionType::fwd, 100, velocityUnits::pct);
+  }
+  else if (Controller1.ButtonL1.pressing()) {
+    arm.spin(directionType::fwd, -100, velocityUnits::pct);
+  }
+  else
+  {
+    arm.stop();
+    arm.setBrake(brakeType::hold);
+  }
 
+  //drive hold button
+  if(Controller1.ButtonLeft.pressing())
+  {
+    fl.stop();
+    fl.setBrake(brakeType::hold);
+
+<<<<<<< HEAD
 }
+=======
+    bl.stop();
+    bl.setBrake(brakeType::hold);
+
+    fr.stop();
+    fr.setBrake(brakeType::hold);
+
+    br.stop();
+    br.setBrake(brakeType::hold);
+  }
+
+  
+
+    wait(20, msec); 
+  }
+>>>>>>> parent of 13b35a9 (start of macro)
 }
 
-int main() {
+
+int main() 
+{
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
 
