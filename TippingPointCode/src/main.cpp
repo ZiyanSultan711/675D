@@ -5,12 +5,6 @@ using namespace vex;
 
 void pre_auton(void) {
   vexcodeInit();
-  Inert = vex::inertial(vex::PORT21);
-  Inert.calibrate();
-  // waits for the Inertial Sensor to calibrate
-  while (Inert.isCalibrating()) {
-    wait(100, msec);
-  }
 }
 
 void autonomous(void) {
@@ -23,10 +17,10 @@ void autonomous(void) {
     resetDriveSensors = true;
   */
 
-  // topAuton();
+  topAuton();
   // botAuton();
   // skillAuton();
-  scrapautoblue();
+  // scrapautoblue();
   // scrapautored();
 }
 
@@ -109,6 +103,7 @@ void startMogoManual()
 
 void switchDriveLock()
 {
+  Controller1.rumble("-");
   if(driveLock)
     driveLock = false;
   else if(driveLock == false)
@@ -117,6 +112,8 @@ void switchDriveLock()
 
 void usercontrol(void) {
   while (1) {
+    task::stop(drivePID);
+    enableDrivePID = false;
     if(driveLock == false)
     {
       fl.setBrake(brakeType::coast);
@@ -132,7 +129,6 @@ void usercontrol(void) {
       br.setBrake(brakeType::brake);
     }
     Controller1.ButtonLeft.pressed(switchDriveLock);
-
 
     task a(driveFwd);
     

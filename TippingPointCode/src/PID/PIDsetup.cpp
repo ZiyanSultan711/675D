@@ -4,14 +4,13 @@ using namespace vex;
 // PID CONTROLLER //
 
 // Settings
-double kP = 0.45;
+double kP = 0.55;
 double kI = 0.0;
-double kD = 0.15;
+double kD = 0.1;
 
-double kPT = 0.4;
+double kPT = 0.42;
 double kIT = 0.0;
-double kDT = 0.35;
-
+double kDT = 0.19;
 // Auton Settings
 int desiredVal = 0;
 int turnRightDesiredVal = 0;
@@ -36,7 +35,7 @@ bool enableTurnRightPID = false;
 bool enableTurnPID = false;
 bool resetDriveSensors = false;
 
-float driveSlow = 1.0;
+float driveSlow = 1;
 float turnSlow = 0.8;
 
 int inertVal = Inert.rotation(degrees);
@@ -59,9 +58,9 @@ int drivePID() {
 
     if (desiredVal != 0 && turnDesiredVal == 0) {
       // Lateral Movement PID
-      int LeftMotorAverage = (LFPos + LBPos) / 2;
-      int RightMotorAverage = (RFPos + RBPos) / 2;
-      int averagePosition = (LeftMotorAverage + RightMotorAverage) / 2;
+      //int LeftMotorAverage = (LFPos + LBPos) / 2;
+      //int RightMotorAverage = (RFPos + RBPos) / 2;
+      int averagePosition = (RFPos - LFPos) / 2;
 
       // Potential
       error = averagePosition - desiredVal;
@@ -73,16 +72,16 @@ int drivePID() {
       totalError += error;
 
       double lateralMotorPower =
-          (error * kP) + (derivative * kD) + (totalError * kI);
+          ((error * kP) + (derivative * kD) + (totalError * kI))/12;
 
       bl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
+              vex::voltageUnits::volt);
       br.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
+              vex::voltageUnits::volt);
       fl.spin(vex::directionType::fwd, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
+              vex::voltageUnits::volt);
       fr.spin(vex::directionType::rev, (lateralMotorPower)*driveSlow,
-              vex::velocityUnits::pct);
+              vex::voltageUnits::volt);
 
       // Code
       prevError = error;
@@ -91,9 +90,9 @@ int drivePID() {
 
     else if (desiredVal == 0 && turnDesiredVal != 0) {
       // Turn Movement PID
-      int LeftMotorAverage = (LFPos + LBPos) / 2;
-      int RightMotorAverage = (RFPos + RBPos) / 2;
-      int turnDiff = (LeftMotorAverage + RightMotorAverage) / 2;
+      //int LeftMotorAverage = (LFPos + LBPos) / 2;
+      //int RightMotorAverage = (RFPos + RBPos) / 2;
+      int turnDiff = (LFPos + RFPos) / 2;
 
       // Potential
       errorT = turnDiff - turnDesiredVal;

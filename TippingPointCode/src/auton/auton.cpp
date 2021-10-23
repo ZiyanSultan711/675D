@@ -8,9 +8,33 @@ void topAuton(void) {
   // STARTING FROM TOP OF THE FIELD AUTONOMOUS CODE WITH SELF CORRECTING PID
   // LOOP
   resetDriveSensors = true;
-  desiredVal = 200;
-  task::sleep(1000);
-  // desiredVal = 0;
+  desiredVal = 450;
+  task::sleep(750);
+  armStartRotate(1, 300, 75);
+  task::sleep(1300);
+
+  resetDriveSensors = true;
+  desiredVal = -275;
+  armStartRotate(-1, 550, 75);
+  task::sleep(1300);
+  desiredVal = 0;
+
+  resetDriveSensors = true;
+  turnSlow = 0.7;
+  turnDesiredVal = 195;
+  task::sleep(1300);
+  turnSlow = 1;
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true;
+  desiredVal = 1125;
+  armStartRotate(1, 500, 75);
+  lift.startRotateFor(directionType::rev, 50, rotationUnits::deg, 100, velocityUnits::pct);
+  task::sleep(1500);
+
+  armRotate(1, 200, 75);
+  task::sleep(1300);
+
 }
 
 void botAuton(void) {}

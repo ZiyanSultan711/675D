@@ -17,3 +17,13 @@ void startDriveTurn(double distance, double velocity)
   bl.startRotateFor(directionType::rev, distance, rotationUnits::deg, velocity, velocityUnits::pct);
   br.rotateFor(directionType::rev, distance, rotationUnits::deg, velocity, velocityUnits::pct);
 }
+
+void armRotate(int direction, int distance, int velocity)
+{
+  arm.rotateFor(directionType::fwd, direction*distance, rotationUnits::deg, velocity, velocityUnits::pct);
+}
+
+void armStartRotate(int direction, int distance, int velocity)
+{
+  arm.startRotateFor(directionType::fwd, direction*distance, rotationUnits::deg, velocity, velocityUnits::pct);
+}
