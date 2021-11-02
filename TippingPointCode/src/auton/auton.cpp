@@ -14,26 +14,46 @@ void topAuton(void) {
   task::sleep(1300);
 
   resetDriveSensors = true;
-  desiredVal = -275;
+  desiredVal = -280;
   armStartRotate(-1, 550, 75);
   task::sleep(1300);
   desiredVal = 0;
 
   resetDriveSensors = true;
   turnSlow = 0.7;
-  turnDesiredVal = 195;
+  turnDesiredVal = 205;
   task::sleep(1300);
   turnSlow = 1;
   turnDesiredVal = 0;
 
   resetDriveSensors = true;
-  desiredVal = 1125;
+  desiredVal = 1000;
   armStartRotate(1, 500, 75);
-  lift.startRotateFor(directionType::rev, 50, rotationUnits::deg, 100, velocityUnits::pct);
   task::sleep(1500);
 
-  armRotate(1, 200, 75);
+  resetDriveSensors = true;
+  desiredVal = 105;
+  lift.startRotateFor(directionType::rev, 40, rotationUnits::deg, 50, velocityUnits::pct);
   task::sleep(1300);
+
+  armRotate(1, 150, 75);
+  task::sleep(1000);
+
+  resetDriveSensors = true;
+  desiredVal = -800;
+  task::sleep(1300);
+
+  armRotate(-1, 150, 75);
+  task::sleep(500);
+
+  resetDriveSensors = true;
+  desiredVal = -150;
+  task::sleep(750);
+  desiredVal = 0;
+
+  resetDriveSensors = true;
+  turnDesiredVal = 215;
+  task::sleep(2000);
 
 }
 

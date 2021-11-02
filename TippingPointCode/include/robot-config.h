@@ -9,10 +9,12 @@ extern motor bl;
 extern motor fr;
 extern motor br;
 extern motor lift;
+extern motor lift2;
 extern motor mogo;
-extern motor tail;
 extern motor arm;
-extern inertial Inert;
+extern inertial InertLeft;
+extern inertial InertRight;
+extern rotation liftPot;
 extern rotation mogoPot;
 
 void vexcodeInit(void);
