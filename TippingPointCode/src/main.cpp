@@ -75,6 +75,7 @@ int driveFwd() {
             -Controller1.Axis3.value() + (Controller1.Axis1.value() * opControlDriveSlow),
             vex::velocityUnits::pct);
   }
+  task::sleep(100);
   return 1;
 }
 
@@ -90,6 +91,7 @@ int mogoMacro() {
     mogo.rotateTo(-15, rotationUnits::deg, 100, velocityUnits::pct);
     mogoIsDown = false;
   }
+  task::sleep(100);
   return 1;
 }
 
@@ -102,6 +104,7 @@ int liftMacro(){
   //lift.startRotateTo(0, rotationUnits::deg, -100, velocityUnits::pct);
   //liftGroup.rotateTo(-10, rotationUnits::deg, -100, velocityUnits::pct);
   liftManual = true;
+  task::sleep(100);
   return 1;
 }
 
@@ -143,6 +146,7 @@ void usercontrol(void) {
       bl.setBrake(brakeType::coast);
       fr.setBrake(brakeType::coast);
       br.setBrake(brakeType::coast);
+      task::sleep(100);
     }
     else if(driveLock == true)
     {
@@ -150,6 +154,7 @@ void usercontrol(void) {
       bl.setBrake(brakeType::hold);
       fr.setBrake(brakeType::hold);
       br.setBrake(brakeType::hold);
+      task::sleep(100);
     }
     Controller1.ButtonY.pressed(switchDriveLock);
     Controller1.ButtonB.pressed(startMogoMacro);
@@ -185,6 +190,8 @@ void usercontrol(void) {
       arm.stop();
       arm.setBrake(brakeType::hold);
     }
+
+    task::sleep(100);
 
 }
 }
