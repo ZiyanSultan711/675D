@@ -95,7 +95,7 @@ int mogoMacro() {
 
 int liftMacro(){
   liftManual = false;
-  while (liftPot.angle() < 0 )
+  while (lift.rotation(deg) > 0 )
   {
     liftGroup.spin(directionType::fwd, -100, velocityUnits::pct);
   }
