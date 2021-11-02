@@ -38,8 +38,6 @@ bool resetDriveSensors = false;
 float driveSlow = 1;
 float turnSlow = 0.8;
 
-int inertVal = Inert.rotation(degrees);
-
 int drivePID() {
   while (enableDrivePID) {
     if (resetDriveSensors) {
@@ -58,9 +56,9 @@ int drivePID() {
 
     if (desiredVal != 0 && turnDesiredVal == 0) {
       // Lateral Movement PID
-      //int LeftMotorAverage = (LFPos + LBPos) / 2;
-      //int RightMotorAverage = (RFPos + RBPos) / 2;
-      int averagePosition = (RFPos - LFPos) / 2;
+      int LeftMotorAverage = (LFPos + LBPos) / 2;
+      int RightMotorAverage = (RFPos + RBPos) / 2;
+      int averagePosition = (RightMotorAverage - LeftMotorAverage) / 2;
 
       // Potential
       error = averagePosition - desiredVal;

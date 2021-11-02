@@ -1,6 +1,6 @@
 #include "vex.h" //CHECK
 using namespace vex;
-//DATE: 11/01/21
+//DATE: 11/02/21
 //TIME: 4:50 PM
 
 
@@ -12,7 +12,7 @@ bool liftManual = true;
 double opControlDriveSlow = 0.8;
 
 double liftBottomPos = 0;
-double liftTopPos = 840;
+double liftTopPos = -840;
 double mogoBottomPos = 0;
 double mogoTopPos = 120;
 
@@ -95,7 +95,7 @@ int mogoMacro() {
 
 int liftMacro(){
   liftManual = false;
-  while (lift.rotation(rotationUnits::deg) > -5 )
+  while (liftPot.angle() < 0 )
   {
     liftGroup.spin(directionType::fwd, -100, velocityUnits::pct);
   }
