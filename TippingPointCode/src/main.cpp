@@ -1,7 +1,7 @@
 #include "vex.h" //CHECK
 using namespace vex;
 // DATE: 11/03/21
-// TIME: 2:45 PM
+// TIME: 4:20 PM
 
 // variables
 bool mogoIsDown = false;
