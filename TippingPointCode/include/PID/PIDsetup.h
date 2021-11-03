@@ -14,6 +14,7 @@ extern int desiredVal;
 extern int turnRightDesiredVal;
 extern int turnLeftDesiredVal;
 extern int turnDesiredVal;
+extern int turnAngleVal;
 
 extern int error;      // Sensor Value - Desired Value  : Positional Value
 extern int prevError;  // Position 10ms Ago

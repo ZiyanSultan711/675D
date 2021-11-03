@@ -17,7 +17,7 @@ motor mogo = vex::motor(vex::PORT3, false);  // 100 rpm
 motor arm = vex::motor(vex::PORT9, false);   // 200 rpm
 inertial InertLeft = vex::inertial(vex::PORT14);
 inertial InertRight = vex::inertial(vex::PORT16);
-// rotation liftPot = vex::rotation(vex::PORT7);
+rotation liftPot = vex::rotation(vex::PORT4);
 // rotation mogoPot = vex::rotation(vex::PORT8);
 
 void vexcodeInit(void) {

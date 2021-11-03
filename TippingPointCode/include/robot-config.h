@@ -16,5 +16,6 @@ extern inertial InertLeft;
 extern inertial InertRight;
 extern rotation liftPot;
 extern rotation mogoPot;
+extern motor_group liftGroup;
 
 void vexcodeInit(void);

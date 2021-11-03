@@ -57,46 +57,41 @@ void topAuton(void) {
 
 }
 
-void botAuton(void) {}
+void botAuton(void) {
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+
+  resetDriveSensors = true;
+  turnAngleVal = 90;
+  turnDesiredVal = 1;
+  task::sleep(2000);
+  turnDesiredVal = 0;
+  turnAngleVal = 0;
+}
 
 void skillAuton(void) {}
 
-void scrapautoblue(void)
+void scrapAutoRight(void)
 {
-  arm.rotateFor(directionType::fwd, -100, rotationUnits::deg, 100, velocityUnits::pct);
-  arm.startRotateFor(directionType::fwd, 500, rotationUnits::deg, 75, velocityUnits::pct);
-  lift.startRotateFor(directionType::fwd, -20, rotationUnits::deg, 75, velocityUnits::pct);
-  startDriveFwd(800, 60);
-  arm.startRotateFor(directionType::fwd, 160, rotationUnits::deg, 75, velocityUnits::pct);
-  task::sleep(640);
-  startDriveFwd(-550, 50);
-  arm.rotateFor(directionType::fwd, -160, rotationUnits::deg, 100, velocityUnits::pct);
-  startDriveFwd(-100, 40);
-  arm.startRotateFor(directionType::fwd, 160, rotationUnits::deg, 75, velocityUnits::pct);
-  task::sleep(20);
-  mogo.startRotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
-  startDriveTurn(300, 40);
-  task::sleep(20);
-  startDriveFwd(-380, 50);
-  mogo.rotateTo(0, rotationUnits::deg, -100, velocityUnits::pct);
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+
+  resetDriveSensors = true;
+  driveSlow = 0.85;
+  desiredVal = 804; 
+  armStartRotate(-1, 300, 75);
+  liftGroup.spinFor(directionType::fwd, -20, deg);
+  task::sleep(1550);
+  armStartRotate(1, 100, 100);
+  task::sleep(300);
+  driveSlow = 1.0;
+
+  resetDriveSensors = true;
+  desiredVal = -700;
+  task::sleep(2000);
 }
 
-void scrapautored(void)
+void scrapAutoLeft(void)
 {
-  arm.rotateFor(directionType::fwd, -100, rotationUnits::deg, 100, velocityUnits::pct);
-  arm.startRotateFor(directionType::fwd, 500, rotationUnits::deg, 75, velocityUnits::pct);
-  lift.startRotateFor(directionType::fwd, -20, rotationUnits::deg, 75, velocityUnits::pct);
-  startDriveFwd(800, 60);
-  arm.startRotateFor(directionType::fwd, 160, rotationUnits::deg, 75, velocityUnits::pct);
-  task::sleep(640);
-  startDriveFwd(-550, 50);
-  arm.rotateFor(directionType::fwd, -160, rotationUnits::deg, 100, velocityUnits::pct);
-  startDriveFwd(-100, 40);
-  arm.startRotateFor(directionType::fwd, 160, rotationUnits::deg, 75, velocityUnits::pct);
-  task::sleep(20);
-  mogo.startRotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
-  startDriveTurn(-300, 40);
-  task::sleep(20);
-  startDriveFwd(-380, 50);
-  mogo.rotateTo(0, rotationUnits::deg, -100, velocityUnits::pct);
+  
 }
