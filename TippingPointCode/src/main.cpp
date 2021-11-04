@@ -1,7 +1,7 @@
 #include "vex.h" //CHECK
 using namespace vex;
-// DATE: 11/03/21
-// TIME: 4:20 PM
+// DATE: 11/04/21
+// TIME: 1:23 PM
 
 // variables
 bool mogoIsDown = false;
@@ -31,8 +31,8 @@ void pre_auton(void) {
 
 void autonomous(void) {
   //topAuton();
-  // botAuton();
-  skillAuton();
+  botAuton();
+  // skillAuton();
   // scrapAutoRight();
 }
 
@@ -60,20 +60,20 @@ int driveFwd(){
 // Macro Tasks
 int mogoMacro() {
   if (mogoIsDown == false) {
-    while(mogoPot.angle() < mogoBottomPos){
-      mogo.spin(directionType::fwd, 100, velocityUnits::pct);
-      task::sleep(20);
-    }
-    mogo.stop();
-    // mogo.rotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
+    // while(mogoPot.angle() < mogoBottomPos){
+    //   mogo.spin(directionType::fwd, 100, velocityUnits::pct);
+    //   task::sleep(20);
+    // }
+    // mogo.stop();
+    mogo.rotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
     mogoIsDown = true;
   } else if (mogoIsDown == true) {
-    while(mogoPot.angle() > mogoTopPos){
-      mogo.spin(directionType::rev, 100, velocityUnits::pct);
-      task::sleep(20);
-    }
-    mogo.stop();
-    // mogo.rotateTo(-15, rotationUnits::deg, 100, velocityUnits::pct);
+    // while(mogoPot.angle() > mogoTopPos){
+    //   mogo.spin(directionType::rev, 100, velocityUnits::pct);
+    //   task::sleep(20);
+    // }
+    // mogo.stop();
+    mogo.rotateTo(-15, rotationUnits::deg, 100, velocityUnits::pct);
     mogoIsDown = false;
   }
   return 1;

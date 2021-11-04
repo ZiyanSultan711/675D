@@ -37,6 +37,8 @@ extern bool resetDriveSensors;
 extern float driveSlow;
 extern float turnSlow;
 
+extern void changePIDVal(bool goalInMogoLift, bool goalInClaw, bool liftRaised);
+
 extern int drivePID();
 extern int turnPID();
 

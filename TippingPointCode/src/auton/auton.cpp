@@ -62,14 +62,39 @@ void botAuton(void) {
   enableDrivePID = true;
 
   resetDriveSensors = true;
-  desiredVal = 0;
-  turnDesiredVal = 400;
+  turnDesiredVal = -260;
+  task::sleep(2500);
+
+  resetDriveSensors = true;
+  desiredVal = 200; 
+  task::sleep(1200);
+  
+  resetDriveSensors = true;
+  turnDesiredVal = -260;
   task::sleep(2000);
+
+  resetDriveSensors = true;
+  desiredVal = 200; 
+  task::sleep(1500);
+
+  // changePIDVal(true, true, false);
+  // resetDriveSensors = true;
+  // turnSlow = 0.6;
+  // turnDesiredVal = -260;
+  // task::sleep(2000);
+  // turnSlow = 1.0;
+
+  // resetDriveSensors = true;
+  // driveSlow = 0.8;
+  // desiredVal = 75; 
+  // task::sleep(1500);
+
+
 }
 
 void skillAuton(void) {
-  mogo.startRotateFor(directionType::fwd, 1150, rotationUnits::deg, 100, velocityUnits::pct);
-  task::sleep(1500);
+  mogo.startRotateTo( 1150, rotationUnits::deg, 100, velocityUnits::pct);
+  task::sleep(1200);
 
   task StartDrivePID(drivePID);
   enableDrivePID = true;
@@ -80,11 +105,9 @@ void skillAuton(void) {
   armStartRotate(-1, 300, 75);
   task::sleep(1500);
 
-  while(mogoPot.angle() > mogoTopPos){
-    mogo.spin(directionType::rev, 100, velocityUnits::pct);
-    task::sleep(20);
-  }
-  mogo.stop();
+  mogo.startRotateTo( 0, rotationUnits::deg, 100, velocityUnits::pct);
+  task::sleep(1500);
+  changePIDVal(true, false, false);
 
   resetDriveSensors = true;
   desiredVal = 100;
@@ -93,27 +116,45 @@ void skillAuton(void) {
   driveSlow = 1.0;
 
   resetDriveSensors = true;
-  turnDesiredVal = -248;
-  task::sleep(1500);
+  turnSlow = 0.6;
+  turnDesiredVal = -260;
+  task::sleep(2000);
   turnDesiredVal = 0;
+  turnSlow = 1.0;
 
   resetDriveSensors = true;
-  driveSlow = 0.8;
-  desiredVal = 940;
+  driveSlow = 0.7;
+  desiredVal = 1010;
   task::sleep(1500);
-  armStartRotate(1, 105, 100);
+  armStartRotate(1, 115, 100);
   task::sleep(290);
-  
+  liftGroup.rotateFor(fwd, 20, degrees, 40, velocityUnits::pct);
+  task::sleep(600);
+  changePIDVal(true, true, false);
   
   resetDriveSensors = true;
-  desiredVal = 500;
+  driveSlow = 0.6;
+  desiredVal = 700;
+  task::sleep(1800);
+  desiredVal = 0;
+  driveSlow = 1;
+
+  // liftGroup.rotateTo(800, rotationUnits::deg, 75, velocityUnits::pct);
+  // task::sleep(1400);
+  
+  // resetDriveSensors = true;
+  // turnSlow = 0.6;
+  // turnDesiredVal = -80;
+  // task::sleep(1500);
+  // turnSlow = 1.0;
+
+  
+
+  resetDriveSensors = true;
+  driveSlow = 0.6;
+  desiredVal = 400;
   task::sleep(1500);
   desiredVal = 0;
-
-  resetDriveSensors = true;
-  turnDesiredVal = -80;
-  task::sleep(1500);
-  turnDesiredVal = 0;
 
 }
 

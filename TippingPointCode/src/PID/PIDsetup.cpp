@@ -10,9 +10,9 @@ double kD = 0.19;
 
 //0.55, 0.1
 
-double kPT = 0.42;
+double kPT = 0.41;
 double kIT = 0.0;
-double kDT = 0.2;
+double kDT = 0.24;
 // Auton Settings
 int desiredVal = 0;
 int turnRightDesiredVal = 0;
@@ -40,6 +40,36 @@ bool resetDriveSensors = false;
 
 float driveSlow = 1;
 float turnSlow = 0.8;
+
+void changePIDVal(bool goalInMogoLift, bool goalInClaw, bool liftRaised){
+  if((goalInMogoLift == false) && (goalInClaw == false) && (liftRaised == false)){
+    kP = 0.55;
+    kI = 0.0;
+    kD = 0.2;
+
+    kPT = 0.41;
+    kIT = 0.0;
+    kDT = 0.24;
+  }
+  else if(goalInMogoLift){
+    kP = 0.55;
+    kI = 0.0;
+    kD = 0.19;
+
+    kPT = 0.42;
+    kIT = 0.0;
+    kDT = 0.24;
+  }
+  else if(goalInMogoLift == true && goalInClaw == true){
+    kP = 0.55;
+    kI = 0.0;
+    kD = 0.19;
+
+    kPT = 0.3;
+    kIT = 0.0;
+    kDT = 0.2;
+  }
+}
 
 int drivePID() {
   while (enableDrivePID) {
@@ -86,7 +116,6 @@ int drivePID() {
 
       // Code
       prevError = error;
-      task::sleep(10);
     }
 
     else if (desiredVal == 0 && turnDesiredVal != 0) {
@@ -129,7 +158,6 @@ int drivePID() {
 
       // Code
       prevErrorT = errorT;
-      task::sleep(10);
     }
 
     else if (desiredVal == 0 && turnDesiredVal == 0) {
@@ -138,6 +166,8 @@ int drivePID() {
       fr.setBrake(brakeType::hold);
       br.setBrake(brakeType::hold);
     }
+
+    task::sleep(20);
   }
 
   return 1;
