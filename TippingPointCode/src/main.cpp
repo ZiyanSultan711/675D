@@ -10,29 +10,21 @@ bool liftManual = true;
 
 double opControlDriveSlow = 0.8;
 
-double liftBottomPos = 0;
-double liftTopPos = -840;
-double mogoBottomPos = 0;
-double mogoTopPos = 120;
+double mogoBottomPos = 106;
+double mogoTopPos = 5;
 
 motor_group liftGroup(lift, lift2);
 
 void pre_auton(void) {
   vexcodeInit();
-  fl.setBrake(brakeType::hold);
-  bl.setBrake(brakeType::hold);
-  fr.setBrake(brakeType::hold);
+  br.setBrake(brakeType::coast);
+  fl.setBrake(brakeType::coast);
+  bl.setBrake(brakeType::coast);
+  fr.setBrake(brakeType::coast);
   mogo.setBrake(brakeType::hold);
   lift.setBrake(brakeType::hold);
   lift2.setBrake(brakeType::hold);
   arm.setBrake(brakeType::hold);
-
-  while (InertLeft.isCalibrating()) {
-    wait(10, msec);
-  }
-  while (InertRight.isCalibrating()) {
-    wait(10, msec);
-  }
 
   // Controller1.rumble("-");
 }
@@ -40,7 +32,8 @@ void pre_auton(void) {
 void autonomous(void) {
   //topAuton();
   // botAuton();
-  scrapAutoRight();
+  skillAuton();
+  // scrapAutoRight();
 }
 
 int driveFwd(){
@@ -67,10 +60,20 @@ int driveFwd(){
 // Macro Tasks
 int mogoMacro() {
   if (mogoIsDown == false) {
-    mogo.rotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
+    while(mogoPot.angle() < mogoBottomPos){
+      mogo.spin(directionType::fwd, 100, velocityUnits::pct);
+      task::sleep(20);
+    }
+    mogo.stop();
+    // mogo.rotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
     mogoIsDown = true;
   } else if (mogoIsDown == true) {
-    mogo.rotateTo(-15, rotationUnits::deg, 100, velocityUnits::pct);
+    while(mogoPot.angle() > mogoTopPos){
+      mogo.spin(directionType::rev, 100, velocityUnits::pct);
+      task::sleep(20);
+    }
+    mogo.stop();
+    // mogo.rotateTo(-15, rotationUnits::deg, 100, velocityUnits::pct);
     mogoIsDown = false;
   }
   return 1;
@@ -156,7 +159,7 @@ void usercontrol(void) {
       arm.setBrake(brakeType::hold);
     }
 
-    task::sleep(100);
+    task::sleep(20);
   }
 }
 

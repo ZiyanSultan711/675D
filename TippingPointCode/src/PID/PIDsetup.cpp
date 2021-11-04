@@ -6,13 +6,13 @@ using namespace vex;
 // Settings
 double kP = 0.55;
 double kI = 0.0;
-double kD = 0.2;
+double kD = 0.19;
 
 //0.55, 0.1
 
-double kPT = 0.45;
+double kPT = 0.42;
 double kIT = 0.0;
-double kDT = 0.4;
+double kDT = 0.2;
 // Auton Settings
 int desiredVal = 0;
 int turnRightDesiredVal = 0;

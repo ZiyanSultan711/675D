@@ -67,7 +67,55 @@ void botAuton(void) {
   task::sleep(2000);
 }
 
-void skillAuton(void) {}
+void skillAuton(void) {
+  mogo.startRotateFor(directionType::fwd, 1150, rotationUnits::deg, 100, velocityUnits::pct);
+  task::sleep(1500);
+
+  task StartDrivePID(drivePID);
+  enableDrivePID = true;
+
+  resetDriveSensors = true;
+  driveSlow = 0.8;
+  desiredVal = -250; 
+  armStartRotate(-1, 300, 75);
+  task::sleep(1500);
+
+  while(mogoPot.angle() > mogoTopPos){
+    mogo.spin(directionType::rev, 100, velocityUnits::pct);
+    task::sleep(20);
+  }
+  mogo.stop();
+
+  resetDriveSensors = true;
+  desiredVal = 100;
+  task::sleep(1500);
+  desiredVal = 0;
+  driveSlow = 1.0;
+
+  resetDriveSensors = true;
+  turnDesiredVal = -248;
+  task::sleep(1500);
+  turnDesiredVal = 0;
+
+  resetDriveSensors = true;
+  driveSlow = 0.8;
+  desiredVal = 940;
+  task::sleep(1500);
+  armStartRotate(1, 105, 100);
+  task::sleep(290);
+  
+  
+  resetDriveSensors = true;
+  desiredVal = 500;
+  task::sleep(1500);
+  desiredVal = 0;
+
+  resetDriveSensors = true;
+  turnDesiredVal = -80;
+  task::sleep(1500);
+  turnDesiredVal = 0;
+
+}
 
 void scrapAutoRight(void)
 {
@@ -115,7 +163,7 @@ void scrapAutoRight(void)
   task::sleep(1500);
 
   mogo.startRotateFor(directionType::fwd, 400, rotationUnits::deg, 60, velocityUnits::pct);
-
+  mogoIsDown = true;
 
 }
 
