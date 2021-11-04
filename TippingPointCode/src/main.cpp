@@ -40,7 +40,6 @@ void pre_auton(void) {
 void autonomous(void) {
   //topAuton();
   // botAuton();
-  // skillAuton();
   scrapAutoRight();
 }
 

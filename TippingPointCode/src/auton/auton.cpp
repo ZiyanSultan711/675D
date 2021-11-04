@@ -62,11 +62,9 @@ void botAuton(void) {
   enableDrivePID = true;
 
   resetDriveSensors = true;
-  turnAngleVal = 90;
-  turnDesiredVal = 1;
+  desiredVal = 0;
+  turnDesiredVal = 400;
   task::sleep(2000);
-  turnDesiredVal = 0;
-  turnAngleVal = 0;
 }
 
 void skillAuton(void) {}
@@ -77,18 +75,48 @@ void scrapAutoRight(void)
   enableDrivePID = true;
 
   resetDriveSensors = true;
-  driveSlow = 0.85;
+  driveSlow = 0.9;
   desiredVal = 804; 
   armStartRotate(-1, 300, 75);
-  liftGroup.spinFor(directionType::fwd, -20, deg);
-  task::sleep(1550);
-  armStartRotate(1, 100, 100);
-  task::sleep(300);
+  task::sleep(1350);
+  armStartRotate(1, 105, 100);
+  task::sleep(290);
   driveSlow = 1.0;
 
   resetDriveSensors = true;
-  desiredVal = -700;
-  task::sleep(2000);
+  desiredVal = -540;
+  task::sleep(1300);
+  armStartRotate(-1, 150, 75);
+  task::sleep(500);
+
+  resetDriveSensors = true;
+  desiredVal = -140;
+  task::sleep(1000);
+  desiredVal = 0;
+
+  resetDriveSensors = true;
+  turnDesiredVal = -350;
+  task::sleep(1500);
+  turnDesiredVal = 0;
+  mogo.startRotateFor(directionType::fwd, 1150, rotationUnits::deg, 100, velocityUnits::pct);
+
+  resetDriveSensors = true;
+  desiredVal = -800;
+  task::sleep(1500);
+
+  resetDriveSensors = true;
+  desiredVal = -250;
+  task::sleep(1000);
+  mogo.startRotateFor(directionType::rev, 400, rotationUnits::deg, 75, velocityUnits::pct);
+  task::sleep(800);
+
+  resetDriveSensors = true;
+  desiredVal = 1000;
+  task::sleep(1500);
+
+  mogo.startRotateFor(directionType::fwd, 400, rotationUnits::deg, 60, velocityUnits::pct);
+
+
 }
 
 void scrapAutoLeft(void)

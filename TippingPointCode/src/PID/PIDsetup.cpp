@@ -6,13 +6,13 @@ using namespace vex;
 // Settings
 double kP = 0.55;
 double kI = 0.0;
-double kD = 0.28;
+double kD = 0.2;
 
 //0.55, 0.1
 
-double kPT = 0.5;
+double kPT = 0.45;
 double kIT = 0.0;
-double kDT = 0.1;
+double kDT = 0.4;
 // Auton Settings
 int desiredVal = 0;
 int turnRightDesiredVal = 0;
@@ -94,20 +94,20 @@ int drivePID() {
       // int LeftMotorAverage = (LFPos + LBPos) / 2;
       // int RightMotorAverage = (RFPos + RBPos) / 2;
 
-      // int turnDiff = (LFPos + RFPos) / 2;
+      int turnDiff = (LFPos + RFPos) / 2;
 
-      int turnDiff = (InertLeft.rotation(deg) + InertRight.rotation(deg)) / 2;
-      Controller1.Screen.clearScreen();
-      Controller1.Screen.setCursor(1, 1);
-      Controller1.Screen.print(InertLeft.rotation(deg));
-      Controller1.Screen.setCursor(2, 2);
-      Controller1.Screen.print(InertRight.rotation(deg));
-      Controller1.Screen.setCursor(3, 3);
-      Controller1.Screen.print(turnDiff);
+      // int turnDiff = (InertLeft.angle(deg) + InertRight.angle(deg)) / 2;
+      // Controller1.Screen.clearScreen();
+      // Controller1.Screen.setCursor(1, 1);
+      // Controller1.Screen.print(InertLeft.rotation(deg));
+      // Controller1.Screen.setCursor(2, 2);
+      // Controller1.Screen.print(InertRight.rotation(deg));
+      // Controller1.Screen.setCursor(3, 3);
+      // Controller1.Screen.print(turnDiff);
 
       // Potential
-      errorT = -turnDiff + turnAngleVal;
-      // errorT = turnDiff - turnDesiredVal;
+      // errorT = -turnDiff + turnAngleVal;
+      errorT = turnDiff - turnDesiredVal;
 
       // Derivative
       derivativeT = errorT - prevErrorT;
@@ -129,12 +129,6 @@ int drivePID() {
 
       // Code
       prevErrorT = errorT;
-
-
-      if(errorT < (0.01 * turnAngleVal)) {
-        turnDesiredVal = 0;
-        turnAngleVal = 0;
-      }
       task::sleep(10);
     }
 
