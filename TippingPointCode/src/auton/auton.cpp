@@ -130,7 +130,7 @@ void skillAuton(void) {
   task::sleep(290);
   liftGroup.rotateFor(fwd, 20, degrees, 40, velocityUnits::pct);
   task::sleep(600);
-  changePIDVal(true, true, false);
+  //changePIDVal(true, true, false);
   
   resetDriveSensors = true;
   driveSlow = 0.6;
@@ -139,14 +139,14 @@ void skillAuton(void) {
   desiredVal = 0;
   driveSlow = 1;
 
-  // liftGroup.rotateTo(800, rotationUnits::deg, 75, velocityUnits::pct);
-  // task::sleep(1400);
+  liftGroup.rotateTo(800, rotationUnits::deg, 75, velocityUnits::pct);
+  task::sleep(1400);
   
-  // resetDriveSensors = true;
-  // turnSlow = 0.6;
-  // turnDesiredVal = -80;
-  // task::sleep(1500);
-  // turnSlow = 1.0;
+  resetDriveSensors = true;
+  turnSlow = 0.6;
+  turnDesiredVal = -80;
+  task::sleep(1500);
+  turnSlow = 1.0;
 
   
 

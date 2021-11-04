@@ -51,7 +51,7 @@ void changePIDVal(bool goalInMogoLift, bool goalInClaw, bool liftRaised){
     kIT = 0.0;
     kDT = 0.24;
   }
-  else if(goalInMogoLift){
+  else if(goalInMogoLift == true && goalInClaw == false){
     kP = 0.55;
     kI = 0.0;
     kD = 0.19;
