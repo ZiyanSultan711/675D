@@ -29,10 +29,10 @@ void pre_auton(void) {
 
 void autonomous(void) {
   // rightTwoMogoElim();
-  rightRingtwoMogo();
+  // rightRingtwoMogo();
   // rightRingOneMogo();
   // leftMogo();
-  // leftRingMogo();
+  leftRingMogo();
   // skillAuton();
 }
 

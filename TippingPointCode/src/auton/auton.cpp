@@ -193,11 +193,15 @@ void rightTwoMogoElim(void){
   enableDrivePID = true;
 
   resetDriveSensors = true;
+  driveSlow = 0.75;
   desiredVal = 805; 
   armStartRotate(-1, 300, 75);
-  task::sleep(825);
-  driveSlow = 0.5;
-  task::sleep(600);
+  task::sleep(1185);
+
+  resetDriveSensors = true;
+  desiredVal = 100;
+  task::sleep(115);
+
   armStartRotate(1, 105, 100);
   task::sleep(220);
   driveSlow = 1;
@@ -249,7 +253,7 @@ void rightRingtwoMogo (void){
   turnSlow = 1.0;
 
   resetDriveSensors = true;
-  driveSlow = 0.7;
+  driveSlow = 0.6;
   desiredVal = -430;
   task::sleep(1000);
   driveSlow = 1.0;
@@ -289,17 +293,19 @@ void rightRingtwoMogo (void){
   task::sleep(1325);
 
   resetDriveSensors = true;
+  driveSlow = 0.7;
   desiredVal = 320;
   task::sleep(850);
+  driveSlow = 1.0;
   desiredVal = 0;
 
   resetDriveSensors = true;
-  turnDesiredVal = -102;
+  turnDesiredVal = -100;
   task::sleep(900);
   turnDesiredVal = 0;
 
   resetDriveSensors = true;
-  desiredVal = -750;
+  desiredVal = -780;
   task::sleep(1500);
   desiredVal = 0;
 
@@ -402,7 +408,7 @@ void leftRingMogo (void){
   task::sleep(300);
 
   mogo.startRotateTo(0, degrees, 100, velocityUnits::pct);
-  task::sleep(350);
+  task::sleep(250);
 
   resetDriveSensors = true;
   desiredVal = 200;
@@ -410,16 +416,16 @@ void leftRingMogo (void){
   desiredVal = 0;
 
   resetDriveSensors = true;
-  turnDesiredVal = -257;
-  task::sleep(1000);
+  turnDesiredVal = -247;
+  task::sleep(950);
   turnDesiredVal = 0;
 
   resetDriveSensors = true;
-  desiredVal = 97; //tune
+  driveSlow = 0.58;
+  desiredVal = 972; //tune
   armStartRotate(-1, 300, 75);
   task::sleep(1025);
-  driveSlow = 0.5;
-  task::sleep(500); // tune
+  task::sleep(400); // tune
   armStartRotate(1, 115, 100);
   task::sleep(220);
   driveSlow = 1;
