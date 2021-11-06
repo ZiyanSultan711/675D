@@ -25,15 +25,15 @@ void pre_auton(void) {
   lift.setBrake(brakeType::hold);
   lift2.setBrake(brakeType::hold);
   arm.setBrake(brakeType::hold);
-
-  // Controller1.rumble("-");
 }
 
 void autonomous(void) {
-  //topAuton();
-  // botAuton();
-  skillAuton();
-  // scrapAutoRight();
+  // rightTwoMogoElim();
+  rightRingtwoMogo();
+  // rightRingOneMogo();
+  // leftMogo();
+  // leftRingMogo();
+  // skillAuton();
 }
 
 int driveFwd(){
