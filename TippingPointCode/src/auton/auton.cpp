@@ -47,7 +47,7 @@ void skillAuton(void) {
   
   resetDriveSensors = true;
   turnSlow = 0.9;
-  turnDesiredVal = -87;
+  turnDesiredVal = -86;
   task::sleep(950);
   turnDesiredVal = 0;
   turnSlow = 1.0;
@@ -88,7 +88,7 @@ void skillAuton(void) {
 
   resetDriveSensors = true;
   turnSlow  = 0.6;
-  turnDesiredVal = 288;
+  turnDesiredVal = 290;
   task::sleep(2000);
   liftGroup.rotateTo(-15, rotationUnits::deg, 60, velocityUnits::pct, false);
   task::sleep(600);
@@ -102,7 +102,7 @@ void skillAuton(void) {
 
   resetDriveSensors = true;
   driveSlow = 0.5;
-  desiredVal = 654;
+  desiredVal = 656;
   task::sleep(1575);
   armStartRotate(1, 140, 100);
   task::sleep(220);
@@ -112,7 +112,7 @@ void skillAuton(void) {
   changePIDVal(true, false, false);
 
   resetDriveSensors = true;
-  desiredVal = -173;
+  desiredVal = -172;
   task::sleep(1080);
   desiredVal = 0;
 
@@ -157,12 +157,12 @@ void skillAuton(void) {
   desiredVal = 0;
 
   resetDriveSensors = true;
-  turnDesiredVal = -140;
+  turnDesiredVal = -143;
   task::sleep(1200);
   turnDesiredVal = 0;
 
   resetDriveSensors = true;
-  desiredVal = -730;
+  desiredVal = -755;
   task::sleep(1200);
   liftGroup.rotateTo(-15, rotationUnits::deg, 60, velocityUnits::pct, false);
 
@@ -175,7 +175,7 @@ void skillAuton(void) {
   desiredVal = 0;
 
   resetDriveSensors = true;
-  turnDesiredVal = -242;
+  turnDesiredVal = -244;
   task::sleep(1200);
   turnDesiredVal = 0;
 

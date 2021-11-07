@@ -43,9 +43,9 @@ float turnSlow = 0.8;
 
 void changePIDVal(bool goalInMogoLift, bool goalInClaw, bool liftRaised){
   if((goalInMogoLift == false) && (goalInClaw == false) && (liftRaised == false)){
-    kP = 0.55;
+    kP = 0.54;
     kI = 0.0;
-    kD = 0.2;
+    kD = 0.19;
 
     kPT = 0.41;
     kIT = 0.0;
@@ -58,7 +58,7 @@ void changePIDVal(bool goalInMogoLift, bool goalInClaw, bool liftRaised){
 
     kPT = 0.42;
     kIT = 0.0;
-    kDT = 0.23;
+    kDT = 0.2;
   }
   else if(goalInMogoLift == true && goalInClaw == true){
     kP = 0.55;

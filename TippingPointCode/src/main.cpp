@@ -8,7 +8,7 @@ bool mogoIsDown = false;
 bool driveLock = false;
 bool liftManual = true;
 
-double opControlDriveSlow = 0.7;
+double opControlDriveSlow = 0.65;
 
 double mogoBottomPos = 106;
 double mogoTopPos = 5;
@@ -28,11 +28,11 @@ void pre_auton(void) {
 }
 
 void autonomous(void) {
-  // rightTwoMogoElim();
+  rightTwoMogoElim();
   // rightRingtwoMogo();
   // rightRingOneMogo();
   // leftMogo();
-  leftRingMogo();
+  // leftRingMogo();
   // skillAuton();
 }
 
