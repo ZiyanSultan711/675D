@@ -21,6 +21,8 @@
 #include "auton/auton.h"
 #include "auton/helperfunctions.h"
 
+#include "display.h"
+
 #define waitUntil(condition)                                                   \
   do {                                                                         \
     wait(5, msec);                                                             \

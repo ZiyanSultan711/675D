@@ -6,3 +6,5 @@ extern void rightRingtwoMogo (void);
 extern void rightRingOneMogo (void);
 extern void leftMogo (void);
 extern void leftRingMogo (void);
+
+extern void tuningAuto (void);

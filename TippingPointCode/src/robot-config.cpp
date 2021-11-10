@@ -3,7 +3,7 @@
 using namespace vex;
 
 // A global instance of brain used for printing to the V5 brain screen
-brain Brain;
+brain myBrain;
 
 competition Competition;
 controller Controller1 = vex::controller();
@@ -18,6 +18,8 @@ motor arm = vex::motor(vex::PORT9, false);   // 200 rpm
 inertial InertLeft = vex::inertial(vex::PORT14);
 inertial InertRight = vex::inertial(vex::PORT16);
 rotation mogoPot = vex::rotation(vex::PORT4);
+limit limitFront = limit(myBrain.ThreeWirePort.A);
+limit limitBack =  limit(myBrain.ThreeWirePort.B);
 
 void vexcodeInit(void) {
   // Nothing to initialize

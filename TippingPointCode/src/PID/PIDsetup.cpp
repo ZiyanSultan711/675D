@@ -4,15 +4,16 @@ using namespace vex;
 // PID CONTROLLER //
 
 // Settings
-double kP = 0.55;
+double kP = 0.5;
 double kI = 0.0;
-double kD = 0.19;
+double kD = 0.85;
 
-//0.55, 0.1
+//0.4, 0.1
+//
 
-double kPT = 0.41;
-double kIT = 0.0;
-double kDT = 0.24;
+double kPT = 0.4;
+double kIT = 0.0001;
+double kDT = 0.048;
 // Auton Settings
 int desiredVal = 0;
 int turnRightDesiredVal = 0;
@@ -43,31 +44,31 @@ float turnSlow = 0.8;
 
 void changePIDVal(bool goalInMogoLift, bool goalInClaw, bool liftRaised){
   if((goalInMogoLift == false) && (goalInClaw == false) && (liftRaised == false)){
-    kP = 0.54;
+    kP = 0.5;
     kI = 0.0;
-    kD = 0.19;
+    kD = 0.85;
 
-    kPT = 0.41;
-    kIT = 0.0;
-    kDT = 0.24;
+    kPT = 0.4;
+    kIT = 0.0001;
+    kDT = 0.048;
   }
   else if(goalInMogoLift == true && goalInClaw == false){
-    kP = 0.55;
+    kP = 0.5;
     kI = 0.0;
-    kD = 0.19;
+    kD = 0.85;
 
-    kPT = 0.42;
+    kPT = 0.38;
     kIT = 0.0;
-    kDT = 0.2;
+    kDT = 0.01;
   }
   else if(goalInMogoLift == true && goalInClaw == true){
-    kP = 0.55;
+    kP = 0.5;
     kI = 0.0;
-    kD = 0.19;
+    kD = 0.85;
 
-    kPT = 0.3;
-    kIT = 0.0;
-    kDT = 0.2;
+    kPT = 0.4;
+    kIT = 0.0001;
+    kDT = 0.048;
   }
 }
 
@@ -125,12 +126,12 @@ int drivePID() {
 
       int turnDiff = (LFPos + RFPos) / 2;
 
-      // int turnDiff = (InertLeft.angle(deg) + InertRight.angle(deg)) / 2;
+      // int turnDiff = InertLeft.angle(degrees);
       // Controller1.Screen.clearScreen();
       // Controller1.Screen.setCursor(1, 1);
-      // Controller1.Screen.print(InertLeft.rotation(deg));
+      // Controller1.Screen.print(InertLeft.angle(deg));
       // Controller1.Screen.setCursor(2, 2);
-      // Controller1.Screen.print(InertRight.rotation(deg));
+      // Controller1.Screen.print(InertRight.angle(deg));
       // Controller1.Screen.setCursor(3, 3);
       // Controller1.Screen.print(turnDiff);
 

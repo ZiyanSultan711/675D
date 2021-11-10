@@ -1,4 +1,4 @@
-#include "vex.h" //CHECK
+#include "vex.h" 
 using namespace vex;
 // DATE: 11/04/21
 // TIME: 1:23 PM
@@ -16,6 +16,7 @@ double mogoTopPos = 5;
 motor_group liftGroup(lift, lift2);
 
 void pre_auton(void) {
+  startDisplayCode();
   vexcodeInit();
   br.setBrake(brakeType::coast);
   fl.setBrake(brakeType::coast);
@@ -28,12 +29,14 @@ void pre_auton(void) {
 }
 
 void autonomous(void) {
-  rightTwoMogoElim();
+  // rightTwoMogoElim();
   // rightRingtwoMogo();
   // rightRingOneMogo();
   // leftMogo();
   // leftRingMogo();
-  // skillAuton();
+  skillAuton();
+
+  // tuningAuto();
 }
 
 int driveFwd(){
@@ -126,8 +129,10 @@ void startSwitchDriveLock() {
 
 void usercontrol(void) {
   while (1) {
+
     task::stop(drivePID);
     enableDrivePID = false;
+
     driveFwd();
     Controller1.ButtonY.pressed(startSwitchDriveLock);
     Controller1.ButtonB.pressed(startMogoMacro);

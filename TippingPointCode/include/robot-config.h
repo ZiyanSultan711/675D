@@ -1,6 +1,6 @@
 using namespace vex;
 
-extern brain Brain;
+extern brain myBrain;
 
 extern competition Competition;
 extern controller Controller1;
@@ -17,6 +17,8 @@ extern inertial InertRight;
 extern rotation liftPot;
 extern rotation mogoPot;
 extern motor_group liftGroup;
+extern limit limitFront;
+extern limit limitBack;
 
 extern bool mogoIsDown;
 extern double mogoBottomPos;
