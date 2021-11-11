@@ -19,7 +19,7 @@ int upSelection(void) {
     }
 
     if (Controller1.ButtonRight.pressing() == true) {
-      task::sleep(11);
+      task::sleep(8);
       if (Controller1.ButtonRight.pressing() == false) {
         if (selection == numAuto) {
           selection = 1;
@@ -51,7 +51,8 @@ void startDisplayCode(void) {
 }
 
 int displayCode(void) {
-  task up(upSelection);
+  if(Competition.isCompetitionSwitch())
+    task up(upSelection);
   
 
   while (true) {
@@ -112,7 +113,7 @@ int displayCode(void) {
       myBrain.Screen.print(mogo.temperature(temperatureUnits::celsius));
     }
 
-    if (!Competition.isAutonomous() && !Competition.isDriverControl()) //! Competition.isAutonomous() || !Competition.isDriverControl()
+    if (Competition.isCompetitionSwitch() && !Competition.isDriverControl()) //! Competition.isAutonomous() || !Competition.isDriverControl()
     {
 
       myBrain.Screen.setFont(fontType::mono30);
@@ -133,7 +134,7 @@ int displayCode(void) {
           myBrain.Screen.setFillColor(green);
           myBrain.Screen.setPenColor(black);
         }
-        myBrain.Screen.print("Auton 1");
+        myBrain.Screen.print("rightTwoMogoElim");
       }
       myBrain.Screen.setFillColor(black);
 
@@ -147,7 +148,7 @@ int displayCode(void) {
           myBrain.Screen.setFillColor(green);
           myBrain.Screen.setPenColor(black);
         }
-        myBrain.Screen.print("Auton 2");
+        myBrain.Screen.print("rightRingtwoMogo");
       }
       myBrain.Screen.setFillColor(black);
 
@@ -161,7 +162,7 @@ int displayCode(void) {
           myBrain.Screen.setFillColor(green);
           myBrain.Screen.setPenColor(black);
         }
-        myBrain.Screen.print("Auton 3");
+        myBrain.Screen.print("rightRingOneMogo");
       }
       myBrain.Screen.setFillColor(black);
 
@@ -175,7 +176,7 @@ int displayCode(void) {
           myBrain.Screen.setFillColor(green);
           myBrain.Screen.setPenColor(black);
         }
-        myBrain.Screen.print("Auton 4");
+        myBrain.Screen.print("leftMogo");
       }
       myBrain.Screen.setFillColor(black);
 
@@ -189,7 +190,7 @@ int displayCode(void) {
           myBrain.Screen.setFillColor(green);
           myBrain.Screen.setPenColor(black);
         }
-        myBrain.Screen.print("Auton 5");
+        myBrain.Screen.print("leftRingMogo");
       }
       myBrain.Screen.setFillColor(black);
 
@@ -203,7 +204,7 @@ int displayCode(void) {
           myBrain.Screen.setFillColor(green);
           myBrain.Screen.setPenColor(black);
         }
-        myBrain.Screen.print("Auton 6");
+        myBrain.Screen.print("skillAuton");
       }
       myBrain.Screen.setFillColor(black);
     }

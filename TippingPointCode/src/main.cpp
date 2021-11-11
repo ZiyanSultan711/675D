@@ -8,7 +8,7 @@ bool mogoIsDown = false;
 bool driveLock = false;
 bool liftManual = true;
 
-double opControlDriveSlow = 0.65;
+double opControlDriveSlow = 0.55;
 
 double mogoBottomPos = 106;
 double mogoTopPos = 5;
@@ -29,12 +29,33 @@ void pre_auton(void) {
 }
 
 void autonomous(void) {
+  switch(selection){
+    case 1:
+      rightTwoMogoElim();
+      break;
+    case 2: 
+      rightRingtwoMogo();
+      break;
+    case 3:
+      rightRingOneMogo();
+      break;
+    case 4:
+      leftMogo();
+      break;
+    case 5:
+      leftRingMogo();
+      break;
+    case 6:
+      skillAuton();
+      break;
+  }
+  
   // rightTwoMogoElim();
   // rightRingtwoMogo();
   // rightRingOneMogo();
   // leftMogo();
   // leftRingMogo();
-  skillAuton();
+  // skillAuton();
 
   // tuningAuto();
 }
@@ -60,6 +81,17 @@ int driveFwd(){
     return 1;
 }
 
+double driveCurve(double input){
+  double output = 0.0;
+  double t = 10;
+  double absInput = input;
+  if(input < 0){
+    absInput = -input;
+  }
+  output = (exp(-t/10) + exp((absInput - 100) / 10) * ( 1 - exp(-t/10))) * input;
+  return output;
+}
+
 // Macro Tasks
 int mogoMacro() {
   if (mogoIsDown == false) {
@@ -68,7 +100,7 @@ int mogoMacro() {
     //   task::sleep(20);
     // }
     // mogo.stop();
-    mogo.rotateTo(1150, rotationUnits::deg, 100, velocityUnits::pct);
+    mogo.rotateTo(1145, rotationUnits::deg, 100, velocityUnits::pct);
     mogoIsDown = true;
   } else if (mogoIsDown == true) {
     // while(mogoPot.angle() > mogoTopPos){

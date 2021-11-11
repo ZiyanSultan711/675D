@@ -24,4 +24,6 @@ extern bool mogoIsDown;
 extern double mogoBottomPos;
 extern double mogoTopPos;
 
+extern double driveCurve(double input);
+
 void vexcodeInit(void);
