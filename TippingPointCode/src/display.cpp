@@ -51,8 +51,7 @@ void startDisplayCode(void) {
 }
 
 int displayCode(void) {
-  if(Competition.isCompetitionSwitch())
-    task up(upSelection);
+  //task up(upSelection);
   
 
   while (true) {

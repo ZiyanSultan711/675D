@@ -16,7 +16,7 @@ double mogoTopPos = 5;
 motor_group liftGroup(lift, lift2);
 
 void pre_auton(void) {
-  startDisplayCode();
+  // sstartDisplayCode();
   vexcodeInit();
   br.setBrake(brakeType::coast);
   fl.setBrake(brakeType::coast);

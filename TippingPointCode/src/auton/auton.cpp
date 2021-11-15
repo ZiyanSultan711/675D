@@ -94,7 +94,7 @@ void skillAuton(void) {
 
   resetDriveSensors = true;
   turnSlow  = 0.75;
-  turnDesiredVal = 313; /////////////////////////////////////////////////////////////////////////////
+  turnDesiredVal = 312; /////////////////////////////////////////////////////////////////////////////
   task::sleep(2000);
   liftGroup.rotateTo(-15, rotationUnits::deg, 60, velocityUnits::pct, false);
   task::sleep(600);
@@ -207,10 +207,10 @@ void rightTwoMogoElim(void){
   enableDrivePID = true;
 
   resetDriveSensors = true;
-  driveSlow = 0.75;
-  desiredVal = 904; 
+  driveSlow = 0.70;
+  desiredVal = 898; 
   armStartRotate(-1, 300, 75);
-  task::sleep(1210);
+  task::sleep(1180);
 
   armStartRotate(1, 105, 100);
   task::sleep(180);
@@ -228,7 +228,7 @@ void rightTwoMogoElim(void){
   desiredVal = 0;
 
   resetDriveSensors = true;
-  turnDesiredVal = -351;
+  turnDesiredVal = -346;
   task::sleep(700);
   mogo.startRotateFor(directionType::fwd, 1150, rotationUnits::deg, 100, velocityUnits::pct);
   task::sleep(140);
@@ -254,12 +254,12 @@ void rightTwoMogoElim(void){
   desiredVal = 0;
 
   resetDriveSensors = true;
-  turnDesiredVal = -220;
+  turnDesiredVal = -210;
   task::sleep(680);
   turnDesiredVal = 0;
 
   resetDriveSensors = true;
-  desiredVal = -400;
+  desiredVal = -410;
   task::sleep(700);
 
   mogo.startRotateTo(0, rotationUnits::deg, 100, velocityUnits::pct);
@@ -277,7 +277,7 @@ void rightTwoMogoElim(void){
   turnDesiredVal = 0;
 
   resetDriveSensors = true;
-  desiredVal = 400;
+  desiredVal = 250;
   task::sleep(700);
 
 }
