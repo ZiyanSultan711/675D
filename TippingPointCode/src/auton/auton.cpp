@@ -94,7 +94,7 @@ void skillAuton(void) {
 
   resetDriveSensors = true;
   turnSlow  = 0.75;
-  turnDesiredVal = 312; /////////////////////////////////////////////////////////////////////////////
+  turnDesiredVal = 312; 
   task::sleep(2000);
   liftGroup.rotateTo(-15, rotationUnits::deg, 60, velocityUnits::pct, false);
   task::sleep(600);
